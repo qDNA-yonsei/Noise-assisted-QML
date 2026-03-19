@@ -4,6 +4,7 @@
 
 import json
 import os
+import sys
 import warnings
 from datetime import datetime
 
@@ -11,6 +12,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 warnings.filterwarnings("ignore")
+
+
+class _Tee:
+    """stdout을 화면과 파일 양쪽에 동시 출력."""
+    def __init__(self, filepath):
+        self._file = open(filepath, "w", encoding="utf-8")
+        self._stdout = sys.stdout
+
+    def write(self, data):
+        self._stdout.write(data)
+        self._file.write(data)
+
+    def flush(self):
+        self._stdout.flush()
+        self._file.flush()
+
+    def close(self):
+        sys.stdout = self._stdout
+        self._file.close()
 
 # args → config 패치를 먼저 해야 이후 모듈들이 올바른 값으로 초기화됨
 from args import parse_args, apply_args
@@ -195,9 +215,7 @@ def save_results(r: ExperimentResult, prefix: str):
 # ---------------------------------------------------------------------------
 
 def run_all() -> ExperimentResult:
-    print("CWD =", os.getcwd())
-    ts     = datetime.now().strftime("%Y%m%d_%H%M%S")
-    prefix = f"{C.SAVE_PREFIX}_{ts}"
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # 1) Choose initial seed
     if C.RUN_SEED_SEARCH:
@@ -210,6 +228,21 @@ def run_all() -> ExperimentResult:
         diag            = diagnose_seed(int(C.INIT_SEED))
         seed_search_out = None
 
+    # prefix에 timestamp + seed + optimizer 포함
+    opt_tag  = C.PAULI_OPTIMIZER
+    run_name = f"{ts}_seed{diag.seed}_{opt_tag}"
+    run_dir  = os.path.join("result", run_name)
+    os.makedirs(run_dir, exist_ok=True)
+    prefix   = os.path.join(run_dir, run_name)
+
+    # 이후 모든 print를 log 파일에도 저장
+    tee = _Tee(f"{prefix}.log")
+    sys.stdout = tee
+
+    print(f"CWD = {os.getcwd()}")
+    print(f"Timestamp : {ts}")
+    print(f"Seed      : {diag.seed}")
+    print(f"Optimizer : {opt_tag}")
     print(f"\nUsing seed={diag.seed} | kind={diag.kind} | gap={diag.gap:.6f}")
 
     # 2) Adaptive Pauli annealing (determines total step budget)
@@ -251,6 +284,7 @@ def run_all() -> ExperimentResult:
         print(f"{'shot-'+str(sr.shots):>20} | {sr.optimizer_type:>6} | {budget:>7} | {sr.mean_final_clean_eval:>14.8f} | {esc:>10}")
     print("=" * 100)
 
+    tee.close()
     return result
 
 

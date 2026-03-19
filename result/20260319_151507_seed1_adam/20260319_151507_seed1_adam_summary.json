@@ -1,0 +1,157 @@
+{
+  "init_seed": 1,
+  "seed_diagnosis": {
+    "kind": "stationary-suboptimal",
+    "gap": 2.0000000000000004,
+    "clean_final_energy": -1.9999999999999996,
+    "grad_norm": 1.1738917522976152e-09,
+    "lambda_min": -4.0419532171342836e-16,
+    "paper_trapped": true,
+    "trap_score": -0.09999999941305221
+  },
+  "clean_run": {
+    "optimizer_type": "adam",
+    "lr": 0.01,
+    "total_steps": 100,
+    "final_eval": -1.9999999817996281,
+    "grad_norm": 0.00027712335831321373,
+    "lambda_min": -1.1786554211846105e-08
+  },
+  "pauli_run": {
+    "optimizer_type": "adam",
+    "noise_schedule": [
+      0.4,
+      0.3,
+      0.2,
+      0.1,
+      0.05,
+      0.03,
+      0.01,
+      0.007,
+      0.005,
+      0.0
+    ],
+    "total_steps": 100,
+    "final_clean_eval": -1.9999540151628945,
+    "final_grad_norm": 0.012651782009274233,
+    "final_lambda_min": -9.069854448584784e-05,
+    "stages": [
+      {
+        "noise_p": 0.4,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.3,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.2,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.1,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.05,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.03,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.01,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.007,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.005,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      },
+      {
+        "noise_p": 0.0,
+        "steps_used": 10,
+        "converged": false,
+        "final_std": Infinity,
+        "final_delta": Infinity
+      }
+    ]
+  },
+  "shot_runs": [
+    {
+      "shots": 1000,
+      "optimizer_type": "adam",
+      "escape_threshold": -2.499999981799628,
+      "escape_count": 0,
+      "num_repeats": 1,
+      "mean_final_clean_eval": -1.9989904275571198,
+      "std_final_clean_eval": 0.0,
+      "best_rep_min_eval": -1.9999999999999996,
+      "stuck_rep_final_eval": null
+    },
+    {
+      "shots": 500,
+      "optimizer_type": "adam",
+      "escape_threshold": -2.499999981799628,
+      "escape_count": 0,
+      "num_repeats": 1,
+      "mean_final_clean_eval": -1.9977399802743072,
+      "std_final_clean_eval": 0.0,
+      "best_rep_min_eval": -1.9999999999999996,
+      "stuck_rep_final_eval": null
+    },
+    {
+      "shots": 100,
+      "optimizer_type": "adam",
+      "escape_threshold": -2.499999981799628,
+      "escape_count": 0,
+      "num_repeats": 1,
+      "mean_final_clean_eval": -1.9962835819975533,
+      "std_final_clean_eval": 0.0,
+      "best_rep_min_eval": -1.9999999999999996,
+      "stuck_rep_final_eval": null
+    },
+    {
+      "shots": 50,
+      "optimizer_type": "adam",
+      "escape_threshold": -2.499999981799628,
+      "escape_count": 0,
+      "num_repeats": 1,
+      "mean_final_clean_eval": -1.995507862866934,
+      "std_final_clean_eval": 0.0,
+      "best_rep_min_eval": -1.9999999999999996,
+      "stuck_rep_final_eval": null
+    }
+  ]
+}

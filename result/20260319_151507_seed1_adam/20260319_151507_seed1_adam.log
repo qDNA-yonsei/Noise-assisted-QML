@@ -1,0 +1,100 @@
+CWD = /Users/gim-yujin/Library/CloudStorage/GoogleDrive-k.yujin2228@yonsei.ac.kr/My Drive/Research Materials/OQS_Thermodynamics/Noise-assisted/Codes
+Timestamp : 20260319_151507
+Seed      : 1
+Optimizer : adam
+
+Using seed=1 | kind=stationary-suboptimal | gap=2.000000
+
+[Pauli annealing | opt=adam | schedule=[0.4, 0.3, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]]
+
+  Stage 1/10 | p=0.400 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -2.000000 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 2/10 | p=0.300 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.994199 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 3/10 | p=0.200 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.962285 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 4/10 | p=0.100 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.970669 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 5/10 | p=0.050 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.992247 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 6/10 | p=0.030 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.999086 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 7/10 | p=0.010 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.999918 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 8/10 | p=0.007 (noisy) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.999965 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.3s
+
+  Stage 9/10 | p=0.005 (clean) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.999887 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.1s
+
+  Stage 10/10 | p=0.000 (clean) | adam(lr=0.01)
+   step |      E_clean |       std |   |Δmean|
+     10 |    -1.999954 |       inf |       inf  
+  *** max_steps=10 reached without convergence ***
+  Stage done: steps=10, std=inf, |Δmean|=inf, time=0.2s
+
+Adaptive Pauli done: final_clean_eval=-1.99995402 | total_steps=100
+
+[Clean | opt=adam | steps=100]
+  final energy = -1.99999998  |  time = 2.2s
+
+[Shot-noise | opt=adam | steps=100 | escape_thr=-2.5000]
+
+  shots = 1000
+    rep=00 | final_clean=-1.998990 | min_clean=-2.000000 | escaped=False | time=11.2s
+
+  shots = 500
+    rep=00 | final_clean=-1.997740 | min_clean=-2.000000 | escaped=False | time=10.6s
+
+  shots = 100
+    rep=00 | final_clean=-1.996284 | min_clean=-2.000000 | escaped=False | time=10.3s
+
+  shots = 50
+    rep=00 | final_clean=-1.995508 | min_clean=-2.000000 | escaped=False | time=10.6s
+Summary saved → result/20260319_151507_seed1_adam/20260319_151507_seed1_adam_summary.json
+Plot saved → result/20260319_151507_seed1_adam/20260319_151507_seed1_adam_comparison.png
+
+====================================================================================================
+                mode |    opt |   steps |   final energy |     escape
+----------------------------------------------------------------------------------------------------
+               clean |   adam |     100 |    -1.99999998 |          —
+               pauli |   adam |     100 |    -1.99995402 |          —
+           shot-1000 |   adam |     100 |    -1.99899043 |        0/1
+            shot-500 |   adam |     100 |    -1.99773998 |        0/1
+            shot-100 |   adam |     100 |    -1.99628358 |        0/1
+             shot-50 |   adam |     100 |    -1.99550786 |        0/1
+====================================================================================================

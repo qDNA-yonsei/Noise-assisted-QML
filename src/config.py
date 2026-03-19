@@ -6,7 +6,12 @@
 N_QUBITS = 4
 N_LAYERS = 2
 WIRES = list(range(N_QUBITS))
-RANGES = [1, 2]   # len == N_LAYERS
+RANGES = [1, 2]
+
+# --- Noise mode ---
+# "matched"   : PauliError(Z)->RZ, PauliError(Y)->RY, PauliError(Z)->RZ  (default)
+# "layerwise" : PauliError(X/Z/Y) before each SEL layer (original)
+NOISE_MODE = "matched"   # len == N_LAYERS
 
 # --- Optimizer choice per mode: "gd" | "adam" | "spsa" ---
 CLEAN_OPTIMIZER = "adam"

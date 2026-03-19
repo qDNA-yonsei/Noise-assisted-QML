@@ -14,16 +14,16 @@ from math import ceil
 
 import numpy as np
 
-import config as C
-from noise import CLEAN_COST, make_pauli_cost, make_shot_cost
-from result import (
+from .. import config as C
+from ..noise import CLEAN_COST, make_pauli_cost, make_shot_cost
+from ..result import (
     CleanRunResult,
     PauliStageResult,
     PauliAnnealingResult,
     ShotRepResult,
     ShotRunResult,
 )
-from utils import (
+from ..utils import (
     to_trainable,
     clean_hessian_info,
     optimize_fixed_steps,

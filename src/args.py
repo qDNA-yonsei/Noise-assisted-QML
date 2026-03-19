@@ -4,7 +4,7 @@
 # =============================================================================
 
 import argparse
-import config as C
+from . import config as C
 
 
 def parse_args():

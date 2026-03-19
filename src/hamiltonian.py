@@ -3,7 +3,7 @@
 # =============================================================================
 
 import pennylane as qml
-from config import N_QUBITS
+from .config import N_QUBITS
 
 
 def build_local_z_hamiltonian(n_qubits: int) -> qml.Hamiltonian:

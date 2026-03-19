@@ -16,10 +16,10 @@ import time
 
 import numpy as np
 
-import config as C
-from noise import CLEAN_COST
-from result import SeedDiagnosis, SeedSearchResult
-from utils import (
+from .. import config as C
+from ..noise import CLEAN_COST
+from ..result import SeedDiagnosis, SeedSearchResult
+from ..utils import (
     init_params,
     clean_hessian_info,
     optimize_fixed_steps,

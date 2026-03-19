@@ -6,8 +6,8 @@ import numpy as np
 import pennylane as qml
 from pennylane import numpy as pnp
 
-from config import N_QUBITS, N_LAYERS
-from noise import CLEAN_COST
+from .config import N_QUBITS, N_LAYERS
+from .noise import CLEAN_COST
 
 
 # ---------------------------------------------------------------------------

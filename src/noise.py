@@ -4,9 +4,9 @@
 
 import pennylane as qml
 
-from config import N_QUBITS
-from hamiltonian import H
-from ansatz import apply_sel, apply_sel_with_layerwise_pauli
+from .config import N_QUBITS
+from .hamiltonian import H
+from .ansatz import apply_sel, apply_sel_with_layerwise_pauli
 
 
 def make_clean_cost():

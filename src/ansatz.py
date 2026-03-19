@@ -5,7 +5,7 @@
 import numpy as np
 import pennylane as qml
 
-from config import N_LAYERS, WIRES, RANGES
+from .config import N_LAYERS, WIRES, RANGES
 
 
 def apply_sel(weights):

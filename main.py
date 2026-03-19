@@ -33,13 +33,13 @@ class _Tee:
         self._file.close()
 
 # args → config 패치를 먼저 해야 이후 모듈들이 올바른 값으로 초기화됨
-from args import parse_args, apply_args
+from src.args import parse_args, apply_args
 apply_args(parse_args())
 
-import config as C
-from result import ExperimentResult
-from training.seed_search import run_seed_search, diagnose_seed
-from training.run import run_clean, run_pauli_annealing, run_shot_experiments
+import src.config as C
+from src.result import ExperimentResult
+from src.training.seed_search import run_seed_search, diagnose_seed
+from src.training.run import run_clean, run_pauli_annealing, run_shot_experiments
 
 
 # ---------------------------------------------------------------------------
@@ -231,7 +231,7 @@ def run_all() -> ExperimentResult:
     # prefix에 timestamp + seed + optimizer 포함
     opt_tag  = C.PAULI_OPTIMIZER
     run_name = f"{ts}_seed{diag.seed}_{opt_tag}"
-    run_dir  = os.path.join("result", run_name)
+    run_dir  = os.path.join("outputs", run_name)
     os.makedirs(run_dir, exist_ok=True)
     prefix   = os.path.join(run_dir, run_name)
 

@@ -4,4 +4,3 @@ __pycache__/
 .claude/
 .DS_Store
 outputs/
-result/

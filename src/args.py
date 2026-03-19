@@ -16,6 +16,11 @@ def parse_args():
     # --- Circuit ---
     p.add_argument("--n-qubits",  type=int, default=C.N_QUBITS,  help="number of qubits")
     p.add_argument("--n-layers",  type=int, default=C.N_LAYERS,  help="number of SEL layers")
+    p.add_argument("--noise-mode", type=str, default=C.NOISE_MODE,
+                   choices=["matched", "layerwise"],
+                   help="Pauli noise insertion method: "
+                        "'matched' (PauliError per RZ/RY/RZ axis, default) or "
+                        "'layerwise' (X/Z/Y before each SEL layer)")
 
     # --- Seed search ---
     p.add_argument("--no-seed-search", action="store_true",       help="skip seed search, use --init-seed")
@@ -67,6 +72,7 @@ def apply_args(args):
     C.WIRES    = list(range(args.n_qubits))
     C.RANGES   = list(range(1, args.n_layers + 1))[:args.n_layers]
     C.GLOBAL_MIN_ENERGY = -float(args.n_qubits)
+    C.NOISE_MODE = args.noise_mode
 
     # Seed search
     C.RUN_SEED_SEARCH = not args.no_seed_search

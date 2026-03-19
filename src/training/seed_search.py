@@ -7,12 +7,19 @@ Training mode: seed search
 Runs `SEARCH_STEPS` of the clean optimizer over `SEARCH_SEEDS` seeds,
 classifies each one, and returns the best trapped representative.
 
+Checkpoint:
+    Every 50 seeds, progress is saved to SEED_SEARCH_CKPT_DIR.
+    If a checkpoint exists, the search resumes from where it left off.
+
 Entry point:
     run_seed_search() -> SeedSearchResult
     diagnose_seed(seed) -> SeedDiagnosis       (single-seed variant)
 """
 
+import json
+import os
 import time
+from datetime import datetime
 
 import numpy as np
 
@@ -24,6 +31,72 @@ from ..utils import (
     clean_hessian_info,
     optimize_fixed_steps,
 )
+
+
+# ---------------------------------------------------------------------------
+# Checkpoint helpers
+# ---------------------------------------------------------------------------
+
+_CKPT_FILE = "progress.json"
+
+
+def _diag_to_dict(d: SeedDiagnosis) -> dict:
+    return {
+        "seed":               d.seed,
+        "kind":               d.kind,
+        "gap":                d.gap,
+        "clean_final_energy": d.clean_final_energy,
+        "grad_norm":          d.grad_norm,
+        "lambda_min":         d.lambda_min,
+        "lambda_max":         d.lambda_max,
+        "paper_trapped":      d.paper_trapped,
+        "paper_tail_std":     d.paper_tail_std,
+        "paper_tail_drift":   d.paper_tail_drift,
+        "trap_score":         d.trap_score,
+    }
+
+
+def _save_checkpoint(ckpt_dir: str, seeds_checked: list, problematic: list[SeedDiagnosis]):
+    os.makedirs(ckpt_dir, exist_ok=True)
+    for d in problematic:
+        np.save(os.path.join(ckpt_dir, f"params_seed{d.seed}.npy"), np.array(d.final_params))
+    data = {
+        "timestamp":     datetime.now().isoformat(),
+        "n_checked":     len(seeds_checked),
+        "seeds_checked": seeds_checked,
+        "problematic":   [_diag_to_dict(d) for d in problematic],
+    }
+    with open(os.path.join(ckpt_dir, _CKPT_FILE), "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
+    path = os.path.join(ckpt_dir, _CKPT_FILE)
+    if not os.path.exists(path):
+        return set(), []
+    with open(path) as f:
+        data = json.load(f)
+    seeds_done = set(data["seeds_checked"])
+    problematic = []
+    for rec in data["problematic"]:
+        params_path = os.path.join(ckpt_dir, f"params_seed{rec['seed']}.npy")
+        final_params = np.load(params_path) if os.path.exists(params_path) else np.array([])
+        problematic.append(SeedDiagnosis(
+            seed=rec["seed"],
+            kind=rec["kind"],
+            gap=rec["gap"],
+            clean_final_energy=rec["clean_final_energy"],
+            grad_norm=rec["grad_norm"],
+            lambda_min=rec["lambda_min"],
+            lambda_max=rec["lambda_max"],
+            paper_trapped=rec["paper_trapped"],
+            paper_tail_std=rec["paper_tail_std"],
+            paper_tail_drift=rec["paper_tail_drift"],
+            trap_score=rec["trap_score"],
+            eval_hist=np.array([]),
+            final_params=final_params,
+        ))
+    return seeds_done, problematic
 
 
 # ---------------------------------------------------------------------------
@@ -183,23 +256,35 @@ def run_seed_search() -> SeedSearchResult:
     """
     Training mode: seed search.
     Scans SEARCH_SEEDS, identifies trapped seeds, returns SeedSearchResult.
+    Saves checkpoint every 50 seeds; resumes automatically if checkpoint exists.
     """
+    ckpt_dir = C.SEED_SEARCH_CKPT_DIR
+    seeds_done, all_problematic = _load_checkpoint(ckpt_dir)
+
     print("=" * 80)
     print("Seed search mode")
     print(f"  Seeds  : {C.SEARCH_SEEDS[0]} … {C.SEARCH_SEEDS[-1]}")
     print(f"  Steps  : {C.SEARCH_STEPS}")
     print(f"  Opt    : {C.CLEAN_OPTIMIZER}")
+    print(f"  Ckpt   : {ckpt_dir}")
+    if seeds_done:
+        print(f"  Resume : {len(seeds_done)}/{len(C.SEARCH_SEEDS)} seeds already done")
     print("=" * 80)
 
-    all_problematic: list[SeedDiagnosis] = []
+    remaining = [s for s in C.SEARCH_SEEDS if s not in seeds_done]
+    seeds_checked_list = list(seeds_done)
     t0 = time.time()
 
-    for idx, seed in enumerate(C.SEARCH_SEEDS, start=1):
+    for idx, seed in enumerate(remaining, start=1):
         d = diagnose_seed(seed)
+        seeds_checked_list.append(seed)
         if _is_problematic(d):
             all_problematic.append(d)
-        if idx % 50 == 0:
-            print(f"  {idx:4d}/{len(C.SEARCH_SEEDS)} seeds checked …")
+        if len(seeds_checked_list) % 50 == 0:
+            print(f"  {len(seeds_checked_list):4d}/{len(C.SEARCH_SEEDS)} seeds checked …")
+            _save_checkpoint(ckpt_dir, seeds_checked_list, all_problematic)
+
+    _save_checkpoint(ckpt_dir, seeds_checked_list, all_problematic)
 
     n = len(C.SEARCH_SEEDS)
     n_prob  = len(all_problematic)

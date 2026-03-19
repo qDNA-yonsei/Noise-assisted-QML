@@ -27,6 +27,8 @@ def parse_args():
     p.add_argument("--init-seed",      type=int, default=C.INIT_SEED, help="fixed init seed (used when --no-seed-search)")
     p.add_argument("--search-n",       type=int, default=len(C.SEARCH_SEEDS), help="number of seeds to search (range(n))")
     p.add_argument("--search-steps",   type=int, default=C.SEARCH_STEPS, help="optimizer steps per seed during search")
+    p.add_argument("--seed-search-ckpt-dir", type=str, default=C.SEED_SEARCH_CKPT_DIR,
+                   help="directory to save/load seed search checkpoints")
 
     # --- Optimizer ---
     p.add_argument("--optimizer", type=str, default=None,
@@ -75,10 +77,11 @@ def apply_args(args):
     C.NOISE_MODE = args.noise_mode
 
     # Seed search
-    C.RUN_SEED_SEARCH = not args.no_seed_search
-    C.INIT_SEED       = args.init_seed
-    C.SEARCH_SEEDS    = list(range(args.search_n))
-    C.SEARCH_STEPS    = args.search_steps
+    C.RUN_SEED_SEARCH      = not args.no_seed_search
+    C.INIT_SEED            = args.init_seed
+    C.SEARCH_SEEDS         = list(range(args.search_n))
+    C.SEARCH_STEPS         = args.search_steps
+    C.SEED_SEARCH_CKPT_DIR = args.seed_search_ckpt_dir
 
     # Optimizer (--optimizer shortcut이 개별 설정보다 우선)
     if args.optimizer:

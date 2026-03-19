@@ -46,10 +46,11 @@ PAULI_SPSA_A     = 0
 PAULI_SPSA_a     = 3
 
 # --- Seed search ---
-RUN_SEED_SEARCH = True
-INIT_SEED       = 1          # used only when RUN_SEED_SEARCH=False
-SEARCH_SEEDS    = list(range(1000))
-SEARCH_STEPS    = 500
+RUN_SEED_SEARCH      = True
+INIT_SEED            = 1          # used only when RUN_SEED_SEARCH=False
+SEARCH_SEEDS         = list(range(1000))
+SEARCH_STEPS         = 500
+SEED_SEARCH_CKPT_DIR = "outputs/seed_search_ckpt"  # checkpoint dir for seed search
 
 # --- Trap diagnosis ---
 SUBOPT_GAP        = 0.25

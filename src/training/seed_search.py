@@ -59,7 +59,8 @@ def _diag_to_dict(d: SeedDiagnosis) -> dict:
 def _save_checkpoint(ckpt_dir: str, seeds_checked: list, problematic: list[SeedDiagnosis]):
     os.makedirs(ckpt_dir, exist_ok=True)
     for d in problematic:
-        np.save(os.path.join(ckpt_dir, f"params_seed{d.seed}.npy"), np.array(d.final_params))
+        np.save(os.path.join(ckpt_dir, f"init_params_seed{d.seed}.npy"), np.array(d.init_params))
+        np.save(os.path.join(ckpt_dir, f"final_params_seed{d.seed}.npy"), np.array(d.final_params))
     data = {
         "timestamp":     datetime.now().isoformat(),
         "n_checked":     len(seeds_checked),
@@ -79,8 +80,10 @@ def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
     seeds_done = set(data["seeds_checked"])
     problematic = []
     for rec in data["problematic"]:
-        params_path = os.path.join(ckpt_dir, f"params_seed{rec['seed']}.npy")
-        final_params = np.load(params_path) if os.path.exists(params_path) else np.array([])
+        init_path  = os.path.join(ckpt_dir, f"init_params_seed{rec['seed']}.npy")
+        final_path = os.path.join(ckpt_dir, f"final_params_seed{rec['seed']}.npy")
+        init_params_loaded  = np.load(init_path)  if os.path.exists(init_path)  else np.array([])
+        final_params_loaded = np.load(final_path) if os.path.exists(final_path) else np.array([])
         problematic.append(SeedDiagnosis(
             seed=rec["seed"],
             kind=rec["kind"],
@@ -94,7 +97,8 @@ def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
             paper_tail_drift=rec["paper_tail_drift"],
             trap_score=rec["trap_score"],
             eval_hist=np.array([]),
-            final_params=final_params,
+            init_params=init_params_loaded,
+            final_params=final_params_loaded,
         ))
     return seeds_done, problematic
 
@@ -175,6 +179,7 @@ def diagnose_seed(seed: int) -> SeedDiagnosis:
         paper_tail_drift=tail_drift,
         trap_score=score,
         eval_hist=res["eval_hist"],
+        init_params=p0,
         final_params=res["final_params"],
     )
 

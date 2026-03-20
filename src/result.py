@@ -30,7 +30,8 @@ class SeedDiagnosis:
     paper_tail_drift: float
     trap_score: float
     eval_hist: np.ndarray   # clean energy at each step during diagnosis
-    final_params: np.ndarray
+    init_params: np.ndarray  # raw random init (before any optimization)
+    final_params: np.ndarray # params after SEARCH_STEPS of clean optimization
 
 
 @dataclass

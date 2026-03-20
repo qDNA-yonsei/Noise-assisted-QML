@@ -246,15 +246,16 @@ def run_all() -> ExperimentResult:
     print(f"\nUsing seed={diag.seed} | kind={diag.kind} | gap={diag.gap:.6f}")
 
     # 2) Adaptive Pauli annealing (determines total step budget)
-    pauli_run = run_pauli_annealing(diag.final_params)
+    # init_params = raw random init (before seed search steps), matching notebook behaviour
+    pauli_run = run_pauli_annealing(diag.init_params)
     budget    = pauli_run.total_steps
 
     # 3) Clean baseline with same step budget
-    clean_run = run_clean(diag.final_params, steps=budget)
+    clean_run = run_clean(diag.init_params, steps=budget)
 
     # 4) Shot-noise with same step budget
     shot_runs = run_shot_experiments(
-        init_params=diag.final_params,
+        init_params=diag.init_params,
         steps=budget,
         clean_final=clean_run.final_eval,
     )

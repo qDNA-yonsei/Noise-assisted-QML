@@ -60,11 +60,18 @@ def _save_checkpoint(ckpt_dir: str, seeds_checked: list, problematic: list[SeedD
     os.makedirs(ckpt_dir, exist_ok=True)
     for d in problematic:
         np.save(os.path.join(ckpt_dir, f"init_params_seed{d.seed}.npy"), np.array(d.init_params))
-        np.save(os.path.join(ckpt_dir, f"final_params_seed{d.seed}.npy"), np.array(d.final_params))
     data = {
         "timestamp":     datetime.now().isoformat(),
         "n_checked":     len(seeds_checked),
         "seeds_checked": seeds_checked,
+        "config": {
+            "noise_mode":      C.NOISE_MODE,
+            "n_qubits":        C.N_QUBITS,
+            "n_layers":        C.N_LAYERS,
+            "search_steps":    C.SEARCH_STEPS,
+            "clean_optimizer": C.CLEAN_OPTIMIZER,
+            "lr_clean_adam":   C.LR_CLEAN_ADAM,
+        },
         "problematic":   [_diag_to_dict(d) for d in problematic],
     }
     with open(os.path.join(ckpt_dir, _CKPT_FILE), "w") as f:
@@ -80,10 +87,8 @@ def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
     seeds_done = set(data["seeds_checked"])
     problematic = []
     for rec in data["problematic"]:
-        init_path  = os.path.join(ckpt_dir, f"init_params_seed{rec['seed']}.npy")
-        final_path = os.path.join(ckpt_dir, f"final_params_seed{rec['seed']}.npy")
-        init_params_loaded  = np.load(init_path)  if os.path.exists(init_path)  else np.array([])
-        final_params_loaded = np.load(final_path) if os.path.exists(final_path) else np.array([])
+        init_path = os.path.join(ckpt_dir, f"init_params_seed{rec['seed']}.npy")
+        init_params_loaded = np.load(init_path) if os.path.exists(init_path) else np.array([])
         problematic.append(SeedDiagnosis(
             seed=rec["seed"],
             kind=rec["kind"],
@@ -98,7 +103,7 @@ def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
             trap_score=rec["trap_score"],
             eval_hist=np.array([]),
             init_params=init_params_loaded,
-            final_params=final_params_loaded,
+            final_params=np.array([]),
         ))
     return seeds_done, problematic
 
@@ -263,7 +268,24 @@ def run_seed_search() -> SeedSearchResult:
     Scans SEARCH_SEEDS, identifies trapped seeds, returns SeedSearchResult.
     Saves checkpoint every 50 seeds; resumes automatically if checkpoint exists.
     """
-    ckpt_dir = C.SEED_SEARCH_CKPT_DIR
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ckpt_dir = os.path.join(C.SEED_SEARCH_CKPT_DIR, f"{ts}_{C.NOISE_MODE}")
+    os.makedirs(ckpt_dir, exist_ok=True)  # 시작 즉시 폴더 생성
+
+    # config를 시작 즉시 저장
+    config_path = os.path.join(ckpt_dir, "config.json")
+    with open(config_path, "w") as f:
+        json.dump({
+            "timestamp_start": datetime.now().isoformat(),
+            "noise_mode":      C.NOISE_MODE,
+            "n_qubits":        C.N_QUBITS,
+            "n_layers":        C.N_LAYERS,
+            "search_steps":    C.SEARCH_STEPS,
+            "search_n_seeds":  len(C.SEARCH_SEEDS),
+            "clean_optimizer": C.CLEAN_OPTIMIZER,
+            "lr_clean_adam":   C.LR_CLEAN_ADAM,
+        }, f, indent=2)
+
     seeds_done, all_problematic = _load_checkpoint(ckpt_dir)
 
     print("=" * 80)

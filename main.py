@@ -153,6 +153,25 @@ def save_results(r: ExperimentResult, prefix: str):
 
     # JSON summary (no numpy arrays)
     summary = {
+        "config": {
+            "noise_mode":       C.NOISE_MODE,
+            "n_qubits":         C.N_QUBITS,
+            "n_layers":         C.N_LAYERS,
+            "ranges":           C.RANGES,
+            "clean_optimizer":  C.CLEAN_OPTIMIZER,
+            "pauli_optimizer":  C.PAULI_OPTIMIZER,
+            "shot_optimizer":   C.SHOT_OPTIMIZER,
+            "lr_clean_adam":    C.LR_CLEAN_ADAM,
+            "lr_pauli_adam":    C.LR_PAULI_ADAM,
+            "lr_shot_adam":     C.LR_SHOT_ADAM,
+            "pauli_schedule":   C.PAULI_SCHEDULE,
+            "pauli_min_steps":  C.PAULI_MIN_STEPS,
+            "pauli_max_steps":  C.PAULI_MAX_STEPS,
+            "shot_list":        C.SHOT_LIST,
+            "shot_repeats":     C.SHOT_REPEATS,
+            "search_steps":     C.SEARCH_STEPS,
+            "run_seed_search":  C.RUN_SEED_SEARCH,
+        },
         "init_seed": r.init_seed,
         "seed_diagnosis": {
             "kind":               r.seed_diagnosis.kind,
@@ -217,23 +236,45 @@ def save_results(r: ExperimentResult, prefix: str):
 def run_all() -> ExperimentResult:
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
+    opt_tag = C.PAULI_OPTIMIZER
+
+    def _make_run_dir(seed: int):
+        """폴더 + config.json 즉시 생성."""
+        run_name = f"{ts}_seed{seed}_{opt_tag}"
+        run_dir  = os.path.join("outputs", "seed_training", run_name)
+        os.makedirs(run_dir, exist_ok=True)
+        with open(os.path.join(run_dir, "config.json"), "w") as f:
+            json.dump({
+                "timestamp":       ts,
+                "seed":            seed,
+                "noise_mode":      C.NOISE_MODE,
+                "n_qubits":        C.N_QUBITS,
+                "n_layers":        C.N_LAYERS,
+                "pauli_optimizer": C.PAULI_OPTIMIZER,
+                "clean_optimizer": C.CLEAN_OPTIMIZER,
+                "shot_optimizer":  C.SHOT_OPTIMIZER,
+                "lr_pauli_adam":   C.LR_PAULI_ADAM,
+                "lr_clean_adam":   C.LR_CLEAN_ADAM,
+                "lr_shot_adam":    C.LR_SHOT_ADAM,
+                "pauli_schedule":  C.PAULI_SCHEDULE,
+                "shot_list":       C.SHOT_LIST,
+                "shot_repeats":    C.SHOT_REPEATS,
+                "run_seed_search": C.RUN_SEED_SEARCH,
+            }, f, indent=2)
+        return run_dir, os.path.join(run_dir, run_name)
+
     # 1) Choose initial seed
     if C.RUN_SEED_SEARCH:
         search_result   = run_seed_search()
         seed_search_out = search_result
         diag            = search_result.selected
+        run_dir, prefix = _make_run_dir(diag.seed)   # seed 확정 후 생성
     else:
         if C.INIT_SEED is None:
             raise ValueError("RUN_SEED_SEARCH=False but INIT_SEED is None")
+        run_dir, prefix = _make_run_dir(int(C.INIT_SEED))  # 시작 즉시 생성
         diag            = diagnose_seed(int(C.INIT_SEED))
         seed_search_out = None
-
-    # prefix에 timestamp + seed + optimizer 포함
-    opt_tag  = C.PAULI_OPTIMIZER
-    run_name = f"{ts}_seed{diag.seed}_{opt_tag}"
-    run_dir  = os.path.join("outputs", run_name)
-    os.makedirs(run_dir, exist_ok=True)
-    prefix   = os.path.join(run_dir, run_name)
 
     # 이후 모든 print를 log 파일에도 저장
     tee = _Tee(f"{prefix}.log")

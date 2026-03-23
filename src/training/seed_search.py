@@ -78,6 +78,38 @@ def _save_checkpoint(ckpt_dir: str, seeds_checked: list, problematic: list[SeedD
         json.dump(data, f, indent=2)
 
 
+def _save_ranking(ckpt_dir: str, sorted_list: list[SeedDiagnosis]):
+    """problematic seeds ranking을 JSON + CSV로 저장."""
+    rows = [
+        {
+            "rank":           rank,
+            "seed":           d.seed,
+            "kind":           d.kind,
+            "paper_trapped":  d.paper_trapped,
+            "trap_score":     d.trap_score,
+            "gap":            d.gap,
+            "paper_tail_std": d.paper_tail_std,
+            "paper_tail_drift": d.paper_tail_drift,
+            "grad_norm":      d.grad_norm,
+            "lambda_min":     d.lambda_min,
+        }
+        for rank, d in enumerate(sorted_list, start=1)
+    ]
+
+    # JSON
+    with open(os.path.join(ckpt_dir, "ranking.json"), "w") as f:
+        json.dump(rows, f, indent=2)
+
+    # CSV
+    import csv
+    with open(os.path.join(ckpt_dir, "ranking.csv"), "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"Ranking saved → {ckpt_dir}/ranking.json / ranking.csv")
+
+
 def _load_checkpoint(ckpt_dir: str) -> tuple[set, list[SeedDiagnosis]]:
     path = os.path.join(ckpt_dir, _CKPT_FILE)
     if not os.path.exists(path):
@@ -328,6 +360,7 @@ def run_seed_search() -> SeedSearchResult:
     sorted_list = _sort_problematic(all_problematic)
     if sorted_list:
         _print_table(sorted_list)
+        _save_ranking(ckpt_dir, sorted_list)
 
     selected = _select_best(sorted_list)
     print(f"\nSelected seed = {selected.seed}  |  kind = {selected.kind}  |  gap = {selected.gap:.6f}")

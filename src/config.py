@@ -67,7 +67,7 @@ TRAP_SCORE_W_GRAD  = 0.5
 TRAP_SCORE_W_GAP   = 0.05   # subtracted: larger gap → slightly preferred
 
 # --- Adaptive Pauli annealing ---
-PAULI_SCHEDULE  = [0.4, 0.3, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+PAULI_SCHEDULE  = [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
 PAULI_MIN_STEPS = 50
 PAULI_MAX_STEPS = 1000
 PAULI_CHECK_EVERY   = 10

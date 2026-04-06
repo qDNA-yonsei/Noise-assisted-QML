@@ -29,10 +29,7 @@ Key changes
 4. Default schedule mode:
    manual
 
-5. Default Adam learning rate:
-   0.005, matching the paper default.
-
-6. Logging/summaries now record the user-facing p consistently,
+5. Logging/summaries now record the user-facing p consistently,
    while comments in the code explain the matched-mode internal p/2 mapping.
 
 Typical matched-mode commands

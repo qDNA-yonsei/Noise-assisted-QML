@@ -24,6 +24,7 @@ from datetime import datetime
 import numpy as np
 
 from .. import config as C
+from ..hamiltonian import hamiltonian_info_dict
 from ..noise import CLEAN_COST
 from ..result import SeedDiagnosis, SeedSearchResult
 from ..utils import (
@@ -65,12 +66,17 @@ def _save_checkpoint(ckpt_dir: str, seeds_checked: list, problematic: list[SeedD
         "n_checked":     len(seeds_checked),
         "seeds_checked": seeds_checked,
         "config": {
+            "hamiltonian":     hamiltonian_info_dict(),
             "noise_mode":      C.NOISE_MODE,
             "n_qubits":        C.N_QUBITS,
             "n_layers":        C.N_LAYERS,
+            "ranges":          C.RANGES,
             "search_steps":    C.SEARCH_STEPS,
             "clean_optimizer": C.CLEAN_OPTIMIZER,
             "lr_clean_adam":   C.LR_CLEAN_ADAM,
+            "p_max":           C.P_MAX,
+            "noise_decay_a":   C.NOISE_DECAY_A,
+            "pauli_total_steps": C.PAULI_TOTAL_STEPS,
         },
         "problematic":   [_diag_to_dict(d) for d in problematic],
     }
@@ -316,6 +322,9 @@ def run_seed_search() -> SeedSearchResult:
             "search_n_seeds":  len(C.SEARCH_SEEDS),
             "clean_optimizer": C.CLEAN_OPTIMIZER,
             "lr_clean_adam":   C.LR_CLEAN_ADAM,
+            "p_max": C.P_MAX,
+            "noise_decay_a":   C.NOISE_DECAY_A,
+            "pauli_total_steps": C.PAULI_TOTAL_STEPS,
         }, f, indent=2)
 
     seeds_done, all_problematic = _load_checkpoint(ckpt_dir)

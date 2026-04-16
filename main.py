@@ -40,6 +40,7 @@ from src.hamiltonian import hamiltonian_info_dict, hamiltonian_summary_string
 from src.result import ExperimentResult
 from src.training.seed_search import run_seed_search, diagnose_seed
 from src.training.run import run_clean, run_pauli_annealing, run_shot_experiments
+from src.training.method_suite_parallel import run_method_suite_sample, run_method_suite_aggregate
 
 
 
@@ -296,4 +297,11 @@ def run_all() -> ExperimentResult:
 
 
 if __name__ == "__main__":
-    results = run_all()
+    if C.EXPERIMENT_MODE == "standard":
+        results = run_all()
+    elif C.EXPERIMENT_MODE == "method_suite_sample":
+        results = run_method_suite_sample()
+    elif C.EXPERIMENT_MODE == "method_suite_aggregate":
+        results = run_method_suite_aggregate()
+    else:
+        raise ValueError(f"Unknown EXPERIMENT_MODE={C.EXPERIMENT_MODE!r}. Choose 'standard', 'method_suite_sample', or 'method_suite_aggregate'.")

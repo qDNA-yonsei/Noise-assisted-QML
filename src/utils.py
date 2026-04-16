@@ -28,17 +28,17 @@ def to_trainable(x) -> pnp.ndarray:
 
 
 # ---------------------------------------------------------------------------
-# Hessian / gradient diagnostics (always on clean landscape)
+# Hessian / gradient diagnostics
 # ---------------------------------------------------------------------------
 
 
-def clean_hessian_info(params) -> dict:
-    """Returns grad_norm, lambda_min, lambda_max on the clean cost landscape."""
+def hessian_info(cost_fn, params) -> dict:
+    """Returns grad_norm, lambda_min, lambda_max for an arbitrary unary cost_fn."""
     shape = (C.N_LAYERS, C.N_QUBITS, 3)
     x0 = pnp.array(np.array(params).reshape(-1), requires_grad=True)
 
     def flat_cost(x):
-        return CLEAN_COST(x.reshape(shape))
+        return cost_fn(x.reshape(shape))
 
     grad_fn = qml.grad(flat_cost)
     hess_fn = qml.jacobian(grad_fn)
@@ -53,6 +53,11 @@ def clean_hessian_info(params) -> dict:
         "lambda_min": float(eigvals[0]),
         "lambda_max": float(eigvals[-1]),
     }
+
+
+def clean_hessian_info(params) -> dict:
+    """Returns grad_norm, lambda_min, lambda_max on the clean cost landscape."""
+    return hessian_info(CLEAN_COST, params)
 
 
 # ---------------------------------------------------------------------------

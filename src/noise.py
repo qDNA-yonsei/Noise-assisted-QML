@@ -14,21 +14,23 @@ _NOISE_ANSATZ = {
 }
 
 
-def make_clean_cost():
-    """Exact statevector expectation value."""
+
+def make_clean_cost_for_hamiltonian(hamiltonian):
+    """Exact statevector expectation value for an explicit Hamiltonian."""
     dev = qml.device("default.qubit", wires=C.N_QUBITS)
 
     @qml.qnode(dev, interface="autograd", diff_method="best")
     def cost(weights):
         apply_sel(weights)
-        return qml.expval(H)
+        return qml.expval(hamiltonian)
 
     return cost
 
 
-def make_regularized_cost():
+
+def make_regularized_cost_for_hamiltonian(hamiltonian, noise_mode=None):
     """
-    Density-matrix simulation with explicit injected noise.
+    Density-matrix simulation with explicit injected noise for an explicit Hamiltonian.
 
     IMPORTANT USER-FACING CONVENTION
     --------------------------------
@@ -42,22 +44,33 @@ def make_regularized_cost():
 
     - noise_mode='layerwise'
         The user-facing `p` is used directly as the qml.PauliError probability.
-
-    So the external interface is unified, while the matched path still remains
-    exactly faithful to the paper.
     """
-    ansatz_fn = _NOISE_ANSATZ.get(C.NOISE_MODE)
+    mode = C.NOISE_MODE if noise_mode is None else noise_mode
+    ansatz_fn = _NOISE_ANSATZ.get(mode)
     if ansatz_fn is None:
-        raise ValueError(f"Unknown NOISE_MODE={C.NOISE_MODE!r}. Choose 'matched' or 'layerwise'.")
+        raise ValueError(f"Unknown NOISE_MODE={mode!r}. Choose 'matched' or 'layerwise'.")
 
     dev = qml.device("default.mixed", wires=C.N_QUBITS)
 
     @qml.qnode(dev, interface="autograd", diff_method="best")
     def cost(weights, noise_strength):
         ansatz_fn(weights, noise_strength)
-        return qml.expval(H)
+        return qml.expval(hamiltonian)
 
     return cost
+
+
+
+def make_clean_cost():
+    """Exact statevector expectation value for the module-level selected Hamiltonian."""
+    return make_clean_cost_for_hamiltonian(H)
+
+
+
+def make_regularized_cost():
+    """Regularized cost for the module-level selected Hamiltonian."""
+    return make_regularized_cost_for_hamiltonian(H, noise_mode=C.NOISE_MODE)
+
 
 
 def make_pauli_cost(noise_strength: float):
@@ -67,8 +80,9 @@ def make_pauli_cost(noise_strength: float):
     return cost
 
 
-def make_shot_cost(shots: int, device_seed: int):
-    """Finite-shot sampling (noiseless circuit, noisy gradient)."""
+
+def make_shot_cost_for_hamiltonian(hamiltonian, shots: int, device_seed: int):
+    """Finite-shot sampling for an explicit Hamiltonian."""
     dev = qml.device(
         "default.qubit",
         wires=C.N_QUBITS,
@@ -79,9 +93,15 @@ def make_shot_cost(shots: int, device_seed: int):
     @qml.qnode(dev, interface="autograd", diff_method="best")
     def cost(weights):
         apply_sel(weights)
-        return qml.expval(H)
+        return qml.expval(hamiltonian)
 
     return cost
+
+
+
+def make_shot_cost(shots: int, device_seed: int):
+    """Finite-shot sampling (noiseless circuit, noisy gradient)."""
+    return make_shot_cost_for_hamiltonian(H, shots=shots, device_seed=device_seed)
 
 
 CLEAN_COST = make_clean_cost()

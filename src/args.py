@@ -7,6 +7,11 @@ from . import config as C
 
 
 _AVAILABLE_HAMILTONIANS = ["single_Z", "tfim_longitudinal", "j1j2_heisenberg"]
+_AVAILABLE_EXPERIMENT_MODES = [
+    "standard",
+    "method_suite_sample",
+    "method_suite_aggregate",
+]
 
 
 def _default_ranges(n_qubits: int, n_layers: int) -> list[int]:
@@ -26,6 +31,19 @@ def parse_args():
     p = argparse.ArgumentParser(
         description="Noise-Assisted Annealing experiment",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+
+    # --- Top-level mode ---
+    p.add_argument(
+        "--experiment-mode",
+        type=str,
+        default=C.EXPERIMENT_MODE,
+        choices=_AVAILABLE_EXPERIMENT_MODES,
+        help=(
+            "'standard': existing single-Hamiltonian training flow. "
+            "'method_suite_sample': run one random-Hamiltonian sample with five methods and save into its own directory. "
+            "'method_suite_aggregate': merge completed method-suite sample directories into aggregate tables and plots."
+        ),
     )
 
     # --- Circuit ---
@@ -79,7 +97,7 @@ def parse_args():
     p.add_argument("--no-seed-search", action="store_true", help="skip seed search, use --init-seed")
     p.add_argument("--init-seed", type=int, default=C.INIT_SEED, help="fixed init seed (used when --no-seed-search)")
     p.add_argument("--search-n", type=int, default=len(C.SEARCH_SEEDS), help="number of seeds to search (range(n))")
-    p.add_argument("--search-steps", type=int, default=C.SEARCH_STEPS, help="optimizer steps per seed during search")
+    p.add_argument("--search-steps", type=int, default=C.SEARCH_STEPS, help="optimizer steps per seed during clean seed search")
     p.add_argument(
         "--seed-search-ckpt-dir",
         type=str,
@@ -161,6 +179,52 @@ def parse_args():
     p.add_argument("--shot-list", type=int, nargs="+", default=C.SHOT_LIST, help="shots values to test")
     p.add_argument("--shot-repeats", type=int, default=C.SHOT_REPEATS)
 
+    # --- Shared random-Hamiltonian sampling controls ---
+    p.add_argument(
+        "--seed-sweep-num-hamiltonians",
+        type=int,
+        default=C.SEED_SWEEP_NUM_HAMILTONIANS,
+        help="number of random coefficient draws for random-Hamiltonian experiments (legacy shared setting; method_suite has its own count flag)",
+    )
+    p.add_argument(
+        "--seed-sweep-coeff-seed",
+        type=int,
+        default=C.SEED_SWEEP_COEFF_SEED,
+        help="RNG seed for random coefficient draws used by random-Hamiltonian experiments",
+    )
+    p.add_argument("--single-z-range", type=float, nargs=2, default=C.SINGLE_Z_COEFF_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument("--tfim-jzz-range", type=float, nargs=2, default=C.TFIM_JZZ_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument("--tfim-hx-range", type=float, nargs=2, default=C.TFIM_HX_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument("--tfim-hz-range", type=float, nargs=2, default=C.TFIM_HZ_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument("--j1-range", type=float, nargs=2, default=C.J1_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument("--j2-range", type=float, nargs=2, default=C.J2_RANGE, metavar=("MIN", "MAX"))
+    p.add_argument(
+        "--seed-sweep-bad-threshold",
+        type=float,
+        default=C.SEED_SWEEP_BAD_NORM_THRESHOLD,
+        help=(
+            "main bad-final threshold on normalized gap: "
+            "(E_final - E_ground) / (E_top - E_ground)"
+        ),
+    )
+    p.add_argument(
+        "--seed-sweep-threshold-sweep",
+        type=float,
+        nargs="+",
+        default=C.SEED_SWEEP_THRESHOLD_SWEEP,
+        help="threshold grid used by random-Hamiltonian comparison utilities",
+    )
+
+    # --- Parallel-safe multi-method suite ---
+    p.add_argument("--method-suite-root-dir", type=str, default=C.METHOD_SUITE_ROOT_DIR, help="root directory for method_suite_sample / method_suite_aggregate")
+    p.add_argument("--method-suite-tag", type=str, default=C.METHOD_SUITE_TAG, help="campaign tag shared across parallel method-suite jobs")
+    p.add_argument("--method-suite-num-hamiltonians", type=int, default=C.METHOD_SUITE_NUM_HAMILTONIANS, help="expected number of random Hamiltonian samples in the method-suite campaign")
+    p.add_argument("--method-suite-sample-index", type=int, default=C.METHOD_SUITE_SAMPLE_INDEX, help="which random Hamiltonian sample to run in experiment-mode=method_suite_sample")
+    p.add_argument("--method-suite-overwrite", dest="method_suite_skip_existing", action="store_false", default=C.METHOD_SUITE_SKIP_EXISTING, help="rerun sample jobs even when the sample directory already has a completion marker")
+    p.add_argument("--method-suite-bad-threshold", type=float, default=C.METHOD_SUITE_BAD_NORM_THRESHOLD, help="main normalized-gap threshold for bad-final classification in method-suite modes")
+    p.add_argument("--method-suite-threshold-sweep", type=float, nargs="+", default=C.METHOD_SUITE_THRESHOLD_SWEEP, help="threshold grid for aggregate plots in method-suite modes")
+    p.add_argument("--method-suite-shot-list", type=int, nargs="+", default=C.METHOD_SUITE_SHOT_LIST, help="shot-based methods to include after clean / pauli_fixed / pauli_manual in method-suite modes")
+
     # --- I/O ---
     p.add_argument("--save-prefix", type=str, default=C.SAVE_PREFIX)
 
@@ -170,6 +234,9 @@ def parse_args():
 
 def apply_args(args):
     """Apply parsed args to the config module."""
+
+    # Top-level mode
+    C.EXPERIMENT_MODE = args.experiment_mode
 
     # Circuit
     C.N_QUBITS = args.n_qubits
@@ -196,7 +263,7 @@ def apply_args(args):
     C.SEED_SEARCH_CKPT_DIR = args.seed_search_ckpt_dir
 
     # Optimizer
-    if args.optimizer:
+    if args.optimizer is not None:
         C.CLEAN_OPTIMIZER = args.optimizer
         C.PAULI_OPTIMIZER = args.optimizer
         C.SHOT_OPTIMIZER = args.optimizer
@@ -236,6 +303,28 @@ def apply_args(args):
     # Shot noise
     C.SHOT_LIST = args.shot_list
     C.SHOT_REPEATS = args.shot_repeats
+
+    # Shared random-Hamiltonian sampling controls
+    C.SEED_SWEEP_NUM_HAMILTONIANS = args.seed_sweep_num_hamiltonians
+    C.SEED_SWEEP_COEFF_SEED = args.seed_sweep_coeff_seed
+    C.SINGLE_Z_COEFF_RANGE = tuple(args.single_z_range)
+    C.TFIM_JZZ_RANGE = tuple(args.tfim_jzz_range)
+    C.TFIM_HX_RANGE = tuple(args.tfim_hx_range)
+    C.TFIM_HZ_RANGE = tuple(args.tfim_hz_range)
+    C.J1_RANGE = tuple(args.j1_range)
+    C.J2_RANGE = tuple(args.j2_range)
+    C.SEED_SWEEP_BAD_NORM_THRESHOLD = args.seed_sweep_bad_threshold
+    C.SEED_SWEEP_THRESHOLD_SWEEP = list(args.seed_sweep_threshold_sweep)
+
+    # Parallel-safe multi-method suite
+    C.METHOD_SUITE_ROOT_DIR = args.method_suite_root_dir
+    C.METHOD_SUITE_TAG = args.method_suite_tag
+    C.METHOD_SUITE_NUM_HAMILTONIANS = args.method_suite_num_hamiltonians
+    C.METHOD_SUITE_SAMPLE_INDEX = args.method_suite_sample_index
+    C.METHOD_SUITE_SKIP_EXISTING = args.method_suite_skip_existing
+    C.METHOD_SUITE_BAD_NORM_THRESHOLD = args.method_suite_bad_threshold
+    C.METHOD_SUITE_THRESHOLD_SWEEP = list(args.method_suite_threshold_sweep)
+    C.METHOD_SUITE_SHOT_LIST = list(args.method_suite_shot_list)
 
     # IO
     C.SAVE_PREFIX = args.save_prefix

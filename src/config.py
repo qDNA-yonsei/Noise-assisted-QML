@@ -2,11 +2,20 @@
 # config.py — all hyperparameters in one place
 # =============================================================================
 
+# --- Experiment mode ---
+# "standard"               : existing single-Hamiltonian training flow
+# "method_suite_sample"    : run one random-Hamiltonian sample with multiple methods
+#                              and save into its own sample directory (parallel-safe)
+# "method_suite_aggregate" : merge finished method_suite_sample directories and
+#                              build aggregate tables/plots
+EXPERIMENT_MODE = "standard"
+
 # --- Circuit ---
 N_QUBITS = 4
 N_LAYERS = 2
 WIRES = list(range(N_QUBITS))
-# RANGES = [1, 2]
+# RANGES is set at runtime from args.py.
+RANGES = [1 + (i % max(1, N_QUBITS - 1)) for i in range(N_LAYERS)]
 
 # --- Hamiltonian selection ---
 # Available choices:
@@ -28,7 +37,7 @@ TFIM_HX = 1.0
 TFIM_HZ = 0.0
 
 # 1D J1-J2 Heisenberg chain:
-#   H = J1 * Σ_{nn} (XX + YY + ZZ) + J2 * Σ_{nnn} (XX + YY + ZZ)
+#   H = J1 * Σ_nn (XX + YY + ZZ) + J2 * Σ_nnn (XX + YY + ZZ)
 J1 = 1.0
 J2 = 0.0
 
@@ -81,7 +90,7 @@ PAULI_SPSA_a = 3
 RUN_SEED_SEARCH = True
 INIT_SEED = 1
 SEARCH_SEEDS = list(range(1000))
-SEARCH_STEPS = 500
+SEARCH_STEPS = 1000
 SEED_SEARCH_CKPT_DIR = "outputs/seed_search_ckpt"
 
 # --- Trap diagnosis ---
@@ -110,11 +119,11 @@ SCHEDULE_MODE = "manual"
 # - matched mode  : each value is interpreted as the paper's regularization
 #                   strength p, then converted internally to qml.PauliError(p/2).
 # - layerwise mode: each value is used directly as qml.PauliError(p).
-PAULI_SCHEDULE = [0.8, 0.6, 0.4, 0.2, 0.1, 0.06, 0.02, 0.014, 0.01, 0.0]
+PAULI_SCHEDULE = [0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.02, 0.01, 0.0]
 
 # Manual/adaptive schedule controls
-PAULI_MIN_STEPS = 50
-PAULI_MAX_STEPS = 1000
+PAULI_MIN_STEPS = 30
+PAULI_MAX_STEPS = 500
 PAULI_CHECK_EVERY = 10
 PAULI_WINDOW = 20
 PAULI_STD_TOL = 0.005
@@ -139,6 +148,42 @@ SHOT_REPEATS = 5
 SHOT_DEVICE_BASE_SEED = 12345
 SHOT_ESCAPE_THRESHOLD = None
 SHOT_ESCAPE_DELTA = 0.5
+
+# --- Shared random-Hamiltonian sampling helpers ---
+SEED_SWEEP_NUM_HAMILTONIANS = 8
+SEED_SWEEP_COEFF_SEED = 0
+# Random coefficient ranges used by random-Hamiltonian experiments.
+# The selected HAMILTONIAN_NAME determines which range set is used.
+SINGLE_Z_COEFF_RANGE = (-3.0, 3.0)
+TFIM_JZZ_RANGE = (-2.0, 2.0)
+TFIM_HX_RANGE = (-2.0, 2.0)
+TFIM_HZ_RANGE = (-2.0, 2.0)
+J1_RANGE = (-2.0, 2.0)
+J2_RANGE = (-2.0, 2.0)
+
+# Shared normalized-gap helper settings used by random-Hamiltonian experiments:
+#     normalized_gap = (E_final - E_ground) / (E_top - E_ground)
+# A run is counted as a main failure when normalized_gap exceeds the threshold.
+SEED_SWEEP_BAD_NORM_THRESHOLD = 0.10
+SEED_SWEEP_THRESHOLD_SWEEP = [0.01, 0.05, 0.10, 0.20, 0.30]
+SEED_SWEEP_SPAN_EPS = 1e-12
+
+
+# --- Parallel-safe multi-method suite over random Hamiltonians ---
+# Fixed method order used everywhere in this mode:
+#   1. clean
+#   2. pauli_fixed
+#   3. pauli_manual
+#   4. shot_100
+#   5. shot_1000
+METHOD_SUITE_ROOT_DIR = "outputs/seed_search_compare"
+METHOD_SUITE_TAG = "default"
+METHOD_SUITE_NUM_HAMILTONIANS = 8
+METHOD_SUITE_SAMPLE_INDEX = 0
+METHOD_SUITE_SKIP_EXISTING = True
+METHOD_SUITE_BAD_NORM_THRESHOLD = 0.10
+METHOD_SUITE_THRESHOLD_SWEEP = [0.01, 0.05, 0.10, 0.20, 0.30]
+METHOD_SUITE_SHOT_LIST = [100, 1000]
 
 # --- I/O ---
 SAVE_PREFIX = "regularized_vs_clean_vs_shot_sel"

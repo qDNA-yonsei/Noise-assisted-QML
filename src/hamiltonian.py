@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import asdict, dataclass
 
 import numpy as np
@@ -20,6 +19,8 @@ class HamiltonianInfo:
     periodic_boundary: bool
     params: dict
     exact_ground_energy: float
+    exact_top_energy: float
+    spectrum_span: float
 
 
 def _sorted_unique_pairs(pairs: list[tuple[int, int]]) -> list[tuple[int, int]]:
@@ -121,11 +122,80 @@ def build_j1j2_heisenberg_hamiltonian(
     return qml.Hamiltonian(coeffs, obs)
 
 
-def exact_ground_energy(hamiltonian: qml.Hamiltonian, n_qubits: int) -> float:
-    """Compute the exact ground-state energy by dense diagonalization."""
+def exact_spectrum_bounds(hamiltonian: qml.Hamiltonian, n_qubits: int) -> tuple[float, float]:
+    """Compute the exact lowest and highest energies by dense diagonalization."""
     mat = qml.matrix(hamiltonian, wire_order=list(range(n_qubits)))
     eigvals = np.linalg.eigvalsh(np.array(mat, dtype=complex))
-    return float(np.min(np.real(eigvals)))
+    eigvals = np.real(eigvals)
+    return float(np.min(eigvals)), float(np.max(eigvals))
+
+
+def exact_ground_energy(hamiltonian: qml.Hamiltonian, n_qubits: int) -> float:
+    """Backward-compatible helper returning only the exact ground-state energy."""
+    ground, _ = exact_spectrum_bounds(hamiltonian, n_qubits)
+    return ground
+
+
+def build_hamiltonian_by_name(
+    name: str,
+    *,
+    n_qubits: int,
+    periodic: bool,
+    params: dict,
+) -> tuple[qml.Hamiltonian, HamiltonianInfo]:
+    """
+    Build a Hamiltonian family from an explicit parameter dict.
+
+    This is the non-global helper used by the separate seed-sweep comparison
+    mode so that different random coefficient draws can be handled without
+    mutating the module-level default Hamiltonian.
+    """
+    if name == "single_Z":
+        coeff = float(params["single_z_coeff"])
+        h = build_single_z_hamiltonian(n_qubits=n_qubits, coeff=coeff)
+        display_name = "single_Z"
+        info_params = {"single_z_coeff": coeff}
+    elif name == "tfim_longitudinal":
+        jzz = float(params["jzz"])
+        hx = float(params["hx"])
+        hz = float(params["hz"])
+        h = build_tfim_longitudinal_hamiltonian(
+            n_qubits=n_qubits,
+            jzz=jzz,
+            hx=hx,
+            hz=hz,
+            periodic=periodic,
+        )
+        display_name = "1D TFIM + longitudinal field"
+        info_params = {"jzz": jzz, "hx": hx, "hz": hz}
+    elif name == "j1j2_heisenberg":
+        j1 = float(params["j1"])
+        j2 = float(params["j2"])
+        h = build_j1j2_heisenberg_hamiltonian(
+            n_qubits=n_qubits,
+            j1=j1,
+            j2=j2,
+            periodic=periodic,
+        )
+        display_name = "1D J1-J2 Heisenberg"
+        info_params = {"j1": j1, "j2": j2}
+    else:
+        raise ValueError(
+            f"Unknown HAMILTONIAN_NAME={name!r}. "
+            "Choose from 'single_Z', 'tfim_longitudinal', or 'j1j2_heisenberg'."
+        )
+
+    ground, top = exact_spectrum_bounds(h, n_qubits)
+    info = HamiltonianInfo(
+        name=name,
+        display_name=display_name,
+        periodic_boundary=bool(periodic),
+        params=info_params,
+        exact_ground_energy=ground,
+        exact_top_energy=top,
+        spectrum_span=float(top - ground),
+    )
+    return h, info
 
 
 def build_selected_hamiltonian() -> tuple[qml.Hamiltonian, HamiltonianInfo]:
@@ -133,33 +203,14 @@ def build_selected_hamiltonian() -> tuple[qml.Hamiltonian, HamiltonianInfo]:
     n = C.N_QUBITS
 
     if name == "single_Z":
-        h = build_single_z_hamiltonian(n_qubits=n, coeff=C.SINGLE_Z_COEFF)
-        display_name = "single_Z"
-        params = {
-            "single_z_coeff": float(C.SINGLE_Z_COEFF),
-        }
+        params = {"single_z_coeff": float(C.SINGLE_Z_COEFF)}
     elif name == "tfim_longitudinal":
-        h = build_tfim_longitudinal_hamiltonian(
-            n_qubits=n,
-            jzz=C.TFIM_JZZ,
-            hx=C.TFIM_HX,
-            hz=C.TFIM_HZ,
-            periodic=C.PERIODIC_BOUNDARY,
-        )
-        display_name = "1D TFIM + longitudinal field"
         params = {
             "jzz": float(C.TFIM_JZZ),
             "hx": float(C.TFIM_HX),
             "hz": float(C.TFIM_HZ),
         }
     elif name == "j1j2_heisenberg":
-        h = build_j1j2_heisenberg_hamiltonian(
-            n_qubits=n,
-            j1=C.J1,
-            j2=C.J2,
-            periodic=C.PERIODIC_BOUNDARY,
-        )
-        display_name = "1D J1-J2 Heisenberg"
         params = {
             "j1": float(C.J1),
             "j2": float(C.J2),
@@ -170,15 +221,12 @@ def build_selected_hamiltonian() -> tuple[qml.Hamiltonian, HamiltonianInfo]:
             "Choose from 'single_Z', 'tfim_longitudinal', or 'j1j2_heisenberg'."
         )
 
-    ground = exact_ground_energy(h, n)
-    info = HamiltonianInfo(
-        name=name,
-        display_name=display_name,
-        periodic_boundary=bool(C.PERIODIC_BOUNDARY),
+    return build_hamiltonian_by_name(
+        name,
+        n_qubits=n,
+        periodic=bool(C.PERIODIC_BOUNDARY),
         params=params,
-        exact_ground_energy=ground,
     )
-    return h, info
 
 
 def hamiltonian_info_dict() -> dict:
@@ -190,8 +238,16 @@ def hamiltonian_summary_string() -> str:
     bc = "periodic" if H_INFO.periodic_boundary else "open"
     base = f"{H_INFO.display_name} ({H_INFO.name})"
     if H_INFO.name == "single_Z":
-        return f"{base} | {param_str} | exact_ground_energy={H_INFO.exact_ground_energy:.8f}"
-    return f"{base} | boundary={bc} | {param_str} | exact_ground_energy={H_INFO.exact_ground_energy:.8f}"
+        return (
+            f"{base} | {param_str} | "
+            f"exact_ground_energy={H_INFO.exact_ground_energy:.8f} | "
+            f"exact_top_energy={H_INFO.exact_top_energy:.8f}"
+        )
+    return (
+        f"{base} | boundary={bc} | {param_str} | "
+        f"exact_ground_energy={H_INFO.exact_ground_energy:.8f} | "
+        f"exact_top_energy={H_INFO.exact_top_energy:.8f}"
+    )
 
 
 H, H_INFO = build_selected_hamiltonian()

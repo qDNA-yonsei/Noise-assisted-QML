@@ -1,0 +1,35 @@
+# Normalize text files and keep source/config/docs in LF
+* text=auto
+
+# Source code
+*.py   text eol=lf
+*.r    text eol=lf
+*.R    text eol=lf
+*.sh   text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini  text eol=lf
+*.cfg  text eol=lf
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+
+# Windows scripts keep CRLF
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# Binary files
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.pdf  binary
+*.zip  binary
+*.pt   binary
+*.pth  binary
+*.npy  binary
+*.npz  binary

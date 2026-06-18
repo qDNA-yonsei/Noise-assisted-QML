@@ -1,0 +1,124 @@
+{
+  "timestamp": "20260513_121514",
+  "seed": 176,
+  "init_source": "raw_random_init_from_seed",
+  "n_qubits": 4,
+  "n_layers": 2,
+  "ranges": [
+    1,
+    2
+  ],
+  "n_steps": 500,
+  "lr": 0.01,
+  "top_k_list": [
+    8,
+    16
+  ],
+  "weight_by_coeff": true,
+  "pauli_schedule": [
+    0.4,
+    0.3,
+    0.2,
+    0.1,
+    0.05,
+    0.03,
+    0.01,
+    0.007,
+    0.005,
+    0.0
+  ],
+  "init_energy": 0.1516714974192272,
+  "global_min": -4.0,
+  "clean_full_final": -1.999999749815124,
+  "runs": {
+    "clean": {
+      "source": "loaded",
+      "final_energy": -1.999999749815124,
+      "n_steps": 1480
+    },
+    "pruned_8": {
+      "selected_params": [
+        "L0Q0RY1",
+        "L0Q1RY1",
+        "L0Q2RY1",
+        "L0Q3RY1",
+        "L1Q0RY1",
+        "L1Q1RY1",
+        "L1Q2RY1",
+        "L1Q3RY1"
+      ],
+      "final_energy": -3.9999999153727206,
+      "n_steps": 500,
+      "time_s": 10.1
+    },
+    "pruned_16": {
+      "selected_params": [
+        "L0Q0RY1",
+        "L0Q1RY1",
+        "L0Q2RY1",
+        "L0Q3RY1",
+        "L1Q0RY1",
+        "L1Q1RY1",
+        "L1Q2RY1",
+        "L1Q3RY1",
+        "L0Q0RZ0",
+        "L0Q0RZ2",
+        "L0Q1RZ0",
+        "L0Q1RZ2",
+        "L0Q2RZ0",
+        "L0Q2RZ2",
+        "L0Q3RZ0",
+        "L0Q3RZ2"
+      ],
+      "final_energy": -2.0,
+      "n_steps": 500,
+      "time_s": 12.7
+    },
+    "noise": {
+      "source": "re-run via src.training",
+      "final_energy": -3.9999995748624997,
+      "total_steps": 670,
+      "time_s": 35.0
+    },
+    "pruned_8_noise": {
+      "selected_params": [
+        "L0Q0RY1",
+        "L0Q1RY1",
+        "L0Q2RY1",
+        "L0Q3RY1",
+        "L1Q0RY1",
+        "L1Q1RY1",
+        "L1Q2RY1",
+        "L1Q3RY1"
+      ],
+      "final_energy": -3.999999010390269,
+      "total_steps": 690,
+      "time_s": 20.1
+    },
+    "pruned_16_noise": {
+      "selected_params": [
+        "L0Q0RY1",
+        "L0Q1RY1",
+        "L0Q2RY1",
+        "L0Q3RY1",
+        "L1Q0RY1",
+        "L1Q1RY1",
+        "L1Q2RY1",
+        "L1Q3RY1",
+        "L0Q0RZ0",
+        "L0Q0RZ2",
+        "L0Q1RZ0",
+        "L0Q1RZ2",
+        "L0Q2RZ0",
+        "L0Q2RZ2",
+        "L0Q3RZ0",
+        "L0Q3RZ2"
+      ],
+      "final_energy": -3.9999980148977876,
+      "total_steps": 660,
+      "time_s": 26.5
+    }
+  },
+  "total_time_s": 104.3,
+  "plot_file": "plot.png"
+}

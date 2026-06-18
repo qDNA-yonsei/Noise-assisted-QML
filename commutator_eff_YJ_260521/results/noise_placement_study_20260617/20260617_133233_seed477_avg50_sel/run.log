@@ -1,0 +1,296 @@
+============================================================
+  commutator_eff importance scoring
+  seed        : 477  (20260324_170741_seed477)
+  scoring at  : 50 random param sets (averaged eff)
+  n_avg       : 50
+  noise_scale : 1.0
+  init energy : 0.059033
+  global min  : -4.000000
+============================================================
+
+[1] Computing averaged effective-Hamiltonian importance scores (50 param sets)...
+
+  Effective score ranking:
+  rank |        label |  eff score |      std
+  ------------------------------------------
+     1 |      L0Q2RY1 |     6.3322 |   0.5810  ███████████████████████████████
+     2 |      L0Q0RY1 |     6.1983 |   0.5339  ██████████████████████████████
+     3 |      L0Q3RY1 |     6.1546 |   0.5653  ██████████████████████████████
+     4 |      L0Q1RY1 |     5.9345 |   0.3688  █████████████████████████████
+     5 |      L0Q3RZ0 |     5.7565 |   1.2400  ████████████████████████████
+     6 |      L0Q0RZ0 |     5.6651 |   0.7625  ████████████████████████████
+     7 |      L1Q2RY1 |     5.6569 |   0.0000  ████████████████████████████
+     8 |      L1Q3RY1 |     5.6569 |   0.0000  ████████████████████████████
+     9 |      L0Q2RZ0 |     5.5531 |   0.9696  ███████████████████████████
+    10 |      L0Q3RZ2 |     5.5130 |   1.7126  ███████████████████████████
+    11 |      L0Q1RZ0 |     5.4559 |   0.5763  ███████████████████████████
+    12 |      L0Q0RZ2 |     4.8207 |   1.1842  ████████████████████████
+    13 |      L0Q1RZ2 |     4.8059 |   0.8682  ████████████████████████
+    14 |      L0Q2RZ2 |     4.6245 |   1.4280  ███████████████████████
+    15 |      L1Q0RY1 |     4.0000 |   0.0000  ████████████████████
+    16 |      L1Q1RY1 |     4.0000 |   0.0000  ████████████████████
+    17 |      L1Q3RZ0 |     3.7834 |   1.6115  ██████████████████
+    18 |      L1Q2RZ0 |     3.7062 |   1.6369  ██████████████████
+    19 |      L1Q0RZ0 |     2.5375 |   1.1366  ████████████
+    20 |      L1Q1RZ0 |     2.3530 |   1.2138  ███████████
+    21 |      L1Q0RZ2 |     0.0000 |   0.0000  
+    22 |      L1Q1RZ2 |     0.0000 |   0.0000  
+    23 |      L1Q2RZ2 |     0.0000 |   0.0000  
+    24 |      L1Q3RZ2 |     0.0000 |   0.0000  
+
+[2] Plotting importance comparison...
+  Saved: importance_comparison.png
+
+=======================================================
+  Noise annealing experiments
+=======================================================
+
+[B-3] Selective noise experiments...
+
+[selective_8_eff_noise] noise on top-8: ['L0Q2RY1', 'L0Q0RY1', 'L0Q3RY1', 'L0Q1RY1', 'L0Q3RZ0', 'L0Q0RZ0']...
+  noisy gates: 8/24 | schedule: [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+
+  Stage 1/10 | p=0.7
+    converged step 160 | E=0.000450 std=0.00027 Δ=0.00030
+    done: steps=160 | E=0.000450 | 3.6s
+
+  Stage 2/10 | p=0.4
+    converged step 500 | E=-3.975889 std=0.00115 Δ=0.00495
+    done: steps=500 | E=-3.975889 | 11.0s
+
+  Stage 3/10 | p=0.2
+    converged step 50 | E=-3.999907 std=0.00011 Δ=0.00026
+    done: steps=50 | E=-3.999907 | 1.1s
+
+  Stage 4/10 | p=0.1
+    converged step 50 | E=-3.999997 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999997 | 1.1s
+
+  Stage 5/10 | p=0.05
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999999 | 1.1s
+
+  Stage 6/10 | p=0.03
+    converged step 50 | E=-3.999997 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999997 | 1.1s
+
+  Stage 7/10 | p=0.01
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999999 | 1.1s
+
+  Stage 8/10 | p=0.007
+    converged step 50 | E=-3.999997 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999997 | 1.1s
+
+  Stage 9/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  Stage 10/10 | clean
+    converged step 50 | E=-3.999997 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999997 | 0.6s
+
+  total_steps=1060 | final_E=-3.999997
+  → final E = -3.999997  |  22.3s
+
+[selective_12_eff_noise] noise on top-12: ['L0Q2RY1', 'L0Q0RY1', 'L0Q3RY1', 'L0Q1RY1', 'L0Q3RZ0', 'L0Q0RZ0']...
+  noisy gates: 12/24 | schedule: [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+
+  Stage 1/10 | p=0.7
+    converged step 150 | E=0.000384 std=0.00023 Δ=0.00338
+    done: steps=150 | E=0.000384 | 3.5s
+
+  Stage 2/10 | p=0.4
+    converged step 760 | E=-3.903401 std=0.00118 Δ=0.00488
+    done: steps=760 | E=-3.903401 | 17.6s
+
+  Stage 3/10 | p=0.2
+    converged step 50 | E=-3.999683 std=0.00003 Δ=0.00410
+    done: steps=50 | E=-3.999683 | 1.1s
+
+  Stage 4/10 | p=0.1
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999998 | 1.2s
+
+  Stage 5/10 | p=0.05
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999998 | 1.2s
+
+  Stage 6/10 | p=0.03
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999998 | 1.2s
+
+  Stage 7/10 | p=0.01
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999998 | 1.1s
+
+  Stage 8/10 | p=0.007
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999998 | 1.2s
+
+  Stage 9/10 | clean
+    converged step 50 | E=-3.999997 std=0.00000 Δ=0.00005
+    done: steps=50 | E=-3.999997 | 0.6s
+
+  Stage 10/10 | clean
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00006
+    done: steps=50 | E=-3.999998 | 0.6s
+
+  total_steps=1310 | final_E=-3.999998
+  → final E = -3.999998  |  29.3s
+
+[selective_16_eff_noise] noise on top-16: ['L0Q2RY1', 'L0Q0RY1', 'L0Q3RY1', 'L0Q1RY1', 'L0Q3RZ0', 'L0Q0RZ0']...
+  noisy gates: 16/24 | schedule: [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+
+  Stage 1/10 | p=0.7
+    converged step 260 | E=-3.999414 std=0.00031 Δ=0.00279
+    done: steps=260 | E=-3.999414 | 6.3s
+
+  Stage 2/10 | p=0.4
+    converged step 50 | E=-3.999998 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999998 | 1.2s
+
+  Stage 3/10 | p=0.2
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 4/10 | p=0.1
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 5/10 | p=0.05
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 6/10 | p=0.03
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 7/10 | p=0.01
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 8/10 | p=0.007
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.2s
+
+  Stage 9/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  Stage 10/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  total_steps=710 | final_E=-3.999999
+  → final E = -3.999999  |  16.0s
+
+[selective_20_eff_noise] noise on top-20: ['L0Q2RY1', 'L0Q0RY1', 'L0Q3RY1', 'L0Q1RY1', 'L0Q3RZ0', 'L0Q0RZ0']...
+  noisy gates: 20/24 | schedule: [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+
+  Stage 1/10 | p=0.7
+    converged step 260 | E=-3.999091 std=0.00045 Δ=0.00370
+    done: steps=260 | E=-3.999091 | 6.6s
+
+  Stage 2/10 | p=0.4
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00004
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 3/10 | p=0.2
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 4/10 | p=0.1
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 5/10 | p=0.05
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 6/10 | p=0.03
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 7/10 | p=0.01
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 8/10 | p=0.007
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 9/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  Stage 10/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  total_steps=710 | final_E=-3.999999
+  → final E = -3.999999  |  16.8s
+
+[selective_24_eff_noise] noise on top-24: ['L0Q2RY1', 'L0Q0RY1', 'L0Q3RY1', 'L0Q1RY1', 'L0Q3RZ0', 'L0Q0RZ0']...
+  noisy gates: 24/24 | schedule: [0.7, 0.4, 0.2, 0.1, 0.05, 0.03, 0.01, 0.007, 0.005, 0.0]
+
+  Stage 1/10 | p=0.7
+    converged step 260 | E=-3.999091 std=0.00045 Δ=0.00370
+    done: steps=260 | E=-3.999091 | 7.0s
+
+  Stage 2/10 | p=0.4
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00004
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 3/10 | p=0.2
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.4s
+
+  Stage 4/10 | p=0.1
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 5/10 | p=0.05
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 6/10 | p=0.03
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 7/10 | p=0.01
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 1.4s
+
+  Stage 8/10 | p=0.007
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 1.3s
+
+  Stage 9/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00002
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  Stage 10/10 | clean
+    converged step 50 | E=-3.999999 std=0.00000 Δ=0.00003
+    done: steps=50 | E=-3.999999 | 0.6s
+
+  total_steps=710 | final_E=-3.999999
+  → final E = -3.999999  |  17.5s
+
+[3] Plotting training comparison...
+  Saved: training_comparison.png
+
+=================================================================
+                      experiment |    final E |    time
+-----------------------------------------------------------------
+           selective_8_eff_noise |  -3.999997 |   22.3s
+          selective_12_eff_noise |  -3.999998 |   29.3s
+          selective_16_eff_noise |  -3.999999 |   16.0s
+          selective_20_eff_noise |  -3.999999 |   16.8s
+          selective_24_eff_noise |  -3.999999 |   17.5s
+-----------------------------------------------------------------
+                      global min |  -4.000000 |
+  total: 102s
+=================================================================
+
+Results saved → /home/yujin/noise_assisted_annealing/pruning_260512/commutator_eff_YJ_260521/results/20260617_133233_seed477_avg50_sel/

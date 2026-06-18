@@ -74,3 +74,369 @@
 =======================================================
     [B1-full] stage 1 converged step 50  E=-0.45863
   [B1-full] stage 1/9 p=0.400  steps=50  E=-0.45863  (146.7s)
+    [B1-full] stage 2 converged step 200  E=-8.64258
+  [B1-full] stage 2/9 p=0.300  steps=200  E=-8.64258  (592.5s)
+    [B1-full] stage 3 converged step 90  E=-10.58796
+  [B1-full] stage 3/9 p=0.200  steps=90  E=-10.58796  (255.7s)
+    [B1-full] stage 4 converged step 150  E=-13.72165
+  [B1-full] stage 4/9 p=0.100  steps=150  E=-13.72165  (438.2s)
+    [B1-full] stage 5 converged step 90  E=-14.78887
+  [B1-full] stage 5/9 p=0.050  steps=90  E=-14.78887  (262.6s)
+    [B1-full] stage 6 converged step 100  E=-15.34775
+  [B1-full] stage 6/9 p=0.025  steps=100  E=-15.34775  (291.1s)
+    [B1-full] stage 7 converged step 50  E=-15.41760
+  [B1-full] stage 7/9 p=0.010  steps=50  E=-15.41760  (148.9s)
+    [B1-full] stage 8 converged step 50  E=-15.41875
+  [B1-full] stage 8/9 p=0.005  steps=50  E=-15.41875  (143.8s)
+    [B1-full] stage 9 converged step 50  E=-15.41912
+  [B1-full] stage 9/9 clean  steps=50  E=-15.41912  (4.5s)
+  → B1 final E = -15.41912  |  38.1min
+
+=======================================================
+  B2 — pruned noise (top-k gates only, noisy)
+=======================================================
+
+  [B2] k=19 (19/96 = 20%)
+  [B2-k19] stage 1/9 p=0.400  steps=1000  E=nan  (1397.3s)
+  [B2-k19] stage 2/9 p=0.300  steps=1000  E=nan  (1384.9s)
+  [B2-k19] stage 3/9 p=0.200  steps=1000  E=nan  (1441.6s)
+  [B2-k19] stage 4/9 p=0.100  steps=1000  E=nan  (1432.6s)
+  [B2-k19] stage 5/9 p=0.050  steps=1000  E=nan  (1447.8s)
+  [B2-k19] stage 6/9 p=0.025  steps=1000  E=nan  (1425.8s)
+  [B2-k19] stage 7/9 p=0.010  steps=1000  E=nan  (1405.5s)
+  [B2-k19] stage 8/9 p=0.005  steps=1000  E=nan  (1435.7s)
+  [B2-k19] stage 9/9 clean  steps=1000  E=nan  (36.8s)
+  → B2-k19 final E = nan  |  190.1min
+
+  [B2] k=38 (38/96 = 40%)
+    [B2-k38] stage 1 converged step 360  E=-6.41757
+  [B2-k38] stage 1/9 p=0.400  steps=360  E=-6.41757  (608.0s)
+    [B2-k38] stage 2 converged step 50  E=-6.42993
+  [B2-k38] stage 2/9 p=0.300  steps=50  E=-6.42993  (83.6s)
+    [B2-k38] stage 3 converged step 50  E=-6.42994
+  [B2-k38] stage 3/9 p=0.200  steps=50  E=-6.42994  (85.1s)
+    [B2-k38] stage 4 converged step 50  E=-6.42994
+  [B2-k38] stage 4/9 p=0.100  steps=50  E=-6.42994  (83.9s)
+    [B2-k38] stage 5 converged step 50  E=-6.42994
+  [B2-k38] stage 5/9 p=0.050  steps=50  E=-6.42994  (82.1s)
+    [B2-k38] stage 6 converged step 50  E=-6.42994
+  [B2-k38] stage 6/9 p=0.025  steps=50  E=-6.42994  (84.6s)
+    [B2-k38] stage 7 converged step 50  E=-6.42994
+  [B2-k38] stage 7/9 p=0.010  steps=50  E=-6.42994  (81.4s)
+    [B2-k38] stage 8 converged step 50  E=-6.42994
+  [B2-k38] stage 8/9 p=0.005  steps=50  E=-6.42994  (83.3s)
+    [B2-k38] stage 9 converged step 50  E=-6.42994
+  [B2-k38] stage 9/9 clean  steps=50  E=-6.42994  (2.5s)
+  → B2-k38 final E = -6.42994  |  19.9min
+
+  [B2] k=58 (58/96 = 60%)
+    [B2-k58] stage 1 converged step 180  E=-6.42174
+  [B2-k58] stage 1/9 p=0.400  steps=180  E=-6.42174  (378.4s)
+    [B2-k58] stage 2 converged step 50  E=-6.42993
+  [B2-k58] stage 2/9 p=0.300  steps=50  E=-6.42993  (119.4s)
+    [B2-k58] stage 3 converged step 50  E=-6.42994
+  [B2-k58] stage 3/9 p=0.200  steps=50  E=-6.42994  (111.0s)
+    [B2-k58] stage 4 converged step 50  E=-6.42994
+  [B2-k58] stage 4/9 p=0.100  steps=50  E=-6.42994  (120.1s)
+    [B2-k58] stage 5 converged step 50  E=-6.42994
+  [B2-k58] stage 5/9 p=0.050  steps=50  E=-6.42994  (106.2s)
+    [B2-k58] stage 6 converged step 50  E=-6.42994
+  [B2-k58] stage 6/9 p=0.025  steps=50  E=-6.42994  (104.0s)
+    [B2-k58] stage 7 converged step 50  E=-6.42994
+  [B2-k58] stage 7/9 p=0.010  steps=50  E=-6.42994  (105.3s)
+    [B2-k58] stage 8 converged step 50  E=-6.42994
+  [B2-k58] stage 8/9 p=0.005  steps=50  E=-6.42994  (115.3s)
+    [B2-k58] stage 9 converged step 50  E=-6.50251
+  [B2-k58] stage 9/9 clean  steps=50  E=-6.50251  (3.4s)
+  → B2-k58 final E = -6.50251  |  19.4min
+
+  [B2] k=77 (77/96 = 80%)
+    [B2-k77] stage 1 converged step 50  E=0.04751
+  [B2-k77] stage 1/9 p=0.400  steps=50  E=0.04751  (119.3s)
+    [B2-k77] stage 2 converged step 200  E=-4.58863
+  [B2-k77] stage 2/9 p=0.300  steps=200  E=-4.58863  (479.7s)
+    [B2-k77] stage 3 converged step 50  E=-4.59281
+  [B2-k77] stage 3/9 p=0.200  steps=50  E=-4.59281  (124.7s)
+    [B2-k77] stage 4 converged step 50  E=-4.59281
+  [B2-k77] stage 4/9 p=0.100  steps=50  E=-4.59281  (126.0s)
+    [B2-k77] stage 5 converged step 50  E=-4.59281
+  [B2-k77] stage 5/9 p=0.050  steps=50  E=-4.59281  (122.8s)
+    [B2-k77] stage 6 converged step 50  E=-4.59281
+  [B2-k77] stage 6/9 p=0.025  steps=50  E=-4.59281  (130.0s)
+    [B2-k77] stage 7 converged step 50  E=-4.59281
+  [B2-k77] stage 7/9 p=0.010  steps=50  E=-4.59281  (122.9s)
+    [B2-k77] stage 8 converged step 50  E=-4.59281
+  [B2-k77] stage 8/9 p=0.005  steps=50  E=-4.59281  (118.2s)
+    [B2-k77] stage 9 converged step 50  E=-4.59281
+  [B2-k77] stage 9/9 clean  steps=50  E=-4.59281  (5.0s)
+  → B2-k77 final E = -4.59281  |  22.5min
+
+  [B2] k=96 (96/96 = 100%)
+    [B2-k96] stage 1 converged step 50  E=-0.45863
+  [B2-k96] stage 1/9 p=0.400  steps=50  E=-0.45863  (154.3s)
+    [B2-k96] stage 2 converged step 200  E=-8.64258
+  [B2-k96] stage 2/9 p=0.300  steps=200  E=-8.64258  (575.1s)
+    [B2-k96] stage 3 converged step 90  E=-10.58796
+  [B2-k96] stage 3/9 p=0.200  steps=90  E=-10.58796  (259.0s)
+    [B2-k96] stage 4 converged step 150  E=-13.72165
+  [B2-k96] stage 4/9 p=0.100  steps=150  E=-13.72165  (446.3s)
+    [B2-k96] stage 5 converged step 90  E=-14.78887
+  [B2-k96] stage 5/9 p=0.050  steps=90  E=-14.78887  (261.5s)
+    [B2-k96] stage 6 converged step 100  E=-15.34775
+  [B2-k96] stage 6/9 p=0.025  steps=100  E=-15.34775  (285.4s)
+    [B2-k96] stage 7 converged step 50  E=-15.41760
+  [B2-k96] stage 7/9 p=0.010  steps=50  E=-15.41760  (144.1s)
+    [B2-k96] stage 8 converged step 50  E=-15.41875
+  [B2-k96] stage 8/9 p=0.005  steps=50  E=-15.41875  (146.1s)
+    [B2-k96] stage 9 converged step 50  E=-15.41912
+  [B2-k96] stage 9/9 clean  steps=50  E=-15.41912  (4.4s)
+  → B2-k96 final E = -15.41912  |  37.9min
+
+=======================================================
+  B3 — selective noise (all gates, noise on top-k)
+=======================================================
+
+  [B3] k=19 noisy (20%)
+    [B3-k19] stage 1 converged step 480  E=-6.07570
+  [B3-k19] stage 1/9 p=0.400  steps=480  E=-6.07570  (1077.6s)
+    [B3-k19] stage 2 converged step 60  E=-6.26603
+  [B3-k19] stage 2/9 p=0.300  steps=60  E=-6.26603  (131.2s)
+    [B3-k19] stage 3 converged step 100  E=-7.21747
+  [B3-k19] stage 3/9 p=0.200  steps=100  E=-7.21747  (225.5s)
+    [B3-k19] stage 4 converged step 80  E=-8.05408
+  [B3-k19] stage 4/9 p=0.100  steps=80  E=-8.05408  (176.7s)
+    [B3-k19] stage 5 converged step 60  E=-8.24263
+  [B3-k19] stage 5/9 p=0.050  steps=60  E=-8.24263  (135.3s)
+    [B3-k19] stage 6 converged step 140  E=-10.71657
+  [B3-k19] stage 6/9 p=0.025  steps=140  E=-10.71657  (311.3s)
+    [B3-k19] stage 7 converged step 50  E=-10.73087
+  [B3-k19] stage 7/9 p=0.010  steps=50  E=-10.73087  (108.0s)
+    [B3-k19] stage 8 converged step 50  E=-10.73206
+  [B3-k19] stage 8/9 p=0.005  steps=50  E=-10.73206  (110.9s)
+    [B3-k19] stage 9 converged step 50  E=-10.73251
+  [B3-k19] stage 9/9 clean  steps=50  E=-10.73251  (4.6s)
+  → B3-k19 final E = -10.73251  |  38.0min
+
+  [B3] k=38 noisy (40%)
+    [B3-k38] stage 1 converged step 80  E=-1.78219
+  [B3-k38] stage 1/9 p=0.400  steps=80  E=-1.78219  (178.5s)
+    [B3-k38] stage 2 converged step 240  E=-5.71144
+  [B3-k38] stage 2/9 p=0.300  steps=240  E=-5.71144  (534.7s)
+    [B3-k38] stage 3 converged step 140  E=-7.54949
+  [B3-k38] stage 3/9 p=0.200  steps=140  E=-7.54949  (312.0s)
+    [B3-k38] stage 4 converged step 90  E=-8.41530
+  [B3-k38] stage 4/9 p=0.100  steps=90  E=-8.41530  (203.0s)
+    [B3-k38] stage 5 converged step 70  E=-8.89960
+  [B3-k38] stage 5/9 p=0.050  steps=70  E=-8.89960  (166.8s)
+    [B3-k38] stage 6 converged step 50  E=-9.09558
+  [B3-k38] stage 6/9 p=0.025  steps=50  E=-9.09558  (112.4s)
+    [B3-k38] stage 7 converged step 130  E=-11.01620
+  [B3-k38] stage 7/9 p=0.010  steps=130  E=-11.01620  (294.2s)
+    [B3-k38] stage 8 converged step 110  E=-12.09869
+  [B3-k38] stage 8/9 p=0.005  steps=110  E=-12.09869  (246.9s)
+    [B3-k38] stage 9 converged step 50  E=-12.12519
+  [B3-k38] stage 9/9 clean  steps=50  E=-12.12519  (4.7s)
+  → B3-k38 final E = -12.12519  |  34.2min
+
+  [B3] k=58 noisy (60%)
+    [B3-k58] stage 1 converged step 50  E=-0.66967
+  [B3-k58] stage 1/9 p=0.400  steps=50  E=-0.66967  (130.9s)
+    [B3-k58] stage 2 converged step 180  E=-5.52991
+  [B3-k58] stage 2/9 p=0.300  steps=180  E=-5.52991  (457.7s)
+    [B3-k58] stage 3 converged step 130  E=-7.17569
+  [B3-k58] stage 3/9 p=0.200  steps=130  E=-7.17569  (321.1s)
+    [B3-k58] stage 4 converged step 70  E=-8.16876
+  [B3-k58] stage 4/9 p=0.100  steps=70  E=-8.16876  (179.4s)
+    [B3-k58] stage 5 converged step 50  E=-8.64057
+  [B3-k58] stage 5/9 p=0.050  steps=50  E=-8.64057  (123.7s)
+    [B3-k58] stage 6 converged step 50  E=-8.72412
+  [B3-k58] stage 6/9 p=0.025  steps=50  E=-8.72412  (121.5s)
+    [B3-k58] stage 7 converged step 50  E=-8.75031
+  [B3-k58] stage 7/9 p=0.010  steps=50  E=-8.75031  (123.8s)
+    [B3-k58] stage 8 converged step 140  E=-9.91519
+  [B3-k58] stage 8/9 p=0.005  steps=140  E=-9.91519  (356.4s)
+    [B3-k58] stage 9 converged step 50  E=-9.93003
+  [B3-k58] stage 9/9 clean  steps=50  E=-9.93003  (4.6s)
+  → B3-k58 final E = -9.93003  |  30.3min
+
+  [B3] k=77 noisy (80%)
+    [B3-k77] stage 1 converged step 150  E=-1.92249
+  [B3-k77] stage 1/9 p=0.400  steps=150  E=-1.92249  (391.7s)
+    [B3-k77] stage 2 converged step 110  E=-2.86145
+  [B3-k77] stage 2/9 p=0.300  steps=110  E=-2.86145  (290.1s)
+    [B3-k77] stage 3 converged step 110  E=-4.29010
+  [B3-k77] stage 3/9 p=0.200  steps=110  E=-4.29010  (295.0s)
+    [B3-k77] stage 4 converged step 160  E=-11.60192
+  [B3-k77] stage 4/9 p=0.100  steps=160  E=-11.60192  (426.5s)
+    [B3-k77] stage 5 converged step 150  E=-15.07691
+  [B3-k77] stage 5/9 p=0.050  steps=150  E=-15.07691  (397.6s)
+    [B3-k77] stage 6 converged step 80  E=-15.40380
+  [B3-k77] stage 6/9 p=0.025  steps=80  E=-15.40380  (211.3s)
+    [B3-k77] stage 7 converged step 50  E=-15.41890
+  [B3-k77] stage 7/9 p=0.010  steps=50  E=-15.41890  (130.8s)
+    [B3-k77] stage 8 converged step 50  E=-15.41911
+  [B3-k77] stage 8/9 p=0.005  steps=50  E=-15.41911  (130.4s)
+    [B3-k77] stage 9 converged step 50  E=-15.41911
+  [B3-k77] stage 9/9 clean  steps=50  E=-15.41911  (4.5s)
+  → B3-k77 final E = -15.41911  |  38.0min
+
+  [B3] k=96 noisy (100%)
+    [B3-k96] stage 1 converged step 50  E=-0.45863
+  [B3-k96] stage 1/9 p=0.400  steps=50  E=-0.45863  (143.1s)
+    [B3-k96] stage 2 converged step 200  E=-8.64258
+  [B3-k96] stage 2/9 p=0.300  steps=200  E=-8.64258  (572.2s)
+    [B3-k96] stage 3 converged step 90  E=-10.58796
+  [B3-k96] stage 3/9 p=0.200  steps=90  E=-10.58796  (258.1s)
+    [B3-k96] stage 4 converged step 150  E=-13.72165
+  [B3-k96] stage 4/9 p=0.100  steps=150  E=-13.72165  (438.8s)
+    [B3-k96] stage 5 converged step 90  E=-14.78887
+  [B3-k96] stage 5/9 p=0.050  steps=90  E=-14.78887  (261.8s)
+    [B3-k96] stage 6 converged step 100  E=-15.34775
+  [B3-k96] stage 6/9 p=0.025  steps=100  E=-15.34775  (292.8s)
+    [B3-k96] stage 7 converged step 50  E=-15.41760
+  [B3-k96] stage 7/9 p=0.010  steps=50  E=-15.41760  (141.9s)
+    [B3-k96] stage 8 converged step 50  E=-15.41875
+  [B3-k96] stage 8/9 p=0.005  steps=50  E=-15.41875  (146.6s)
+    [B3-k96] stage 9 converged step 50  E=-15.41912
+  [B3-k96] stage 9/9 clean  steps=50  E=-15.41912  (4.5s)
+  → B3-k96 final E = -15.41912  |  37.7min
+
+=======================================================
+  B4 — inv-selective noise (all gates, noise on bottom-96-k)
+=======================================================
+
+  [B4] k=19 important, noise on 77 non-important gates
+    [B4-k19] stage 1 converged step 540  E=-9.26546
+  [B4-k19] stage 1/9 p=0.400  steps=540  E=-9.26546  (1496.3s)
+    [B4-k19] stage 2 converged step 300  E=-11.53503
+  [B4-k19] stage 2/9 p=0.300  steps=300  E=-11.53503  (840.4s)
+    [B4-k19] stage 3 converged step 70  E=-12.57471
+  [B4-k19] stage 3/9 p=0.200  steps=70  E=-12.57471  (194.4s)
+    [B4-k19] stage 4 converged step 70  E=-13.97462
+  [B4-k19] stage 4/9 p=0.100  steps=70  E=-13.97462  (193.6s)
+    [B4-k19] stage 5 converged step 100  E=-14.96401
+  [B4-k19] stage 5/9 p=0.050  steps=100  E=-14.96401  (280.0s)
+    [B4-k19] stage 6 converged step 90  E=-15.38231
+  [B4-k19] stage 6/9 p=0.025  steps=90  E=-15.38231  (253.7s)
+    [B4-k19] stage 7 converged step 50  E=-15.41739
+  [B4-k19] stage 7/9 p=0.010  steps=50  E=-15.41739  (142.6s)
+    [B4-k19] stage 8 converged step 50  E=-15.41863
+  [B4-k19] stage 8/9 p=0.005  steps=50  E=-15.41863  (142.6s)
+    [B4-k19] stage 9 converged step 50  E=-15.41912
+  [B4-k19] stage 9/9 clean  steps=50  E=-15.41912  (4.6s)
+  → B4-k19 final E = -15.41912  |  59.1min
+
+  [B4] k=38 important, noise on 58 non-important gates
+    [B4-k38] stage 1 converged step 430  E=-10.62110
+  [B4-k38] stage 1/9 p=0.400  steps=430  E=-10.62110  (1107.0s)
+    [B4-k38] stage 2 converged step 50  E=-11.33691
+  [B4-k38] stage 2/9 p=0.300  steps=50  E=-11.33691  (132.5s)
+    [B4-k38] stage 3 converged step 70  E=-12.71705
+  [B4-k38] stage 3/9 p=0.200  steps=70  E=-12.71705  (178.4s)
+    [B4-k38] stage 4 converged step 90  E=-14.40569
+  [B4-k38] stage 4/9 p=0.100  steps=90  E=-14.40569  (228.3s)
+    [B4-k38] stage 5 converged step 100  E=-15.19624
+  [B4-k38] stage 5/9 p=0.050  steps=100  E=-15.19624  (250.2s)
+    [B4-k38] stage 6 converged step 50  E=-15.39331
+  [B4-k38] stage 6/9 p=0.025  steps=50  E=-15.39331  (132.8s)
+    [B4-k38] stage 7 converged step 50  E=-15.41490
+  [B4-k38] stage 7/9 p=0.010  steps=50  E=-15.41490  (128.7s)
+    [B4-k38] stage 8 converged step 50  E=-15.41806
+  [B4-k38] stage 8/9 p=0.005  steps=50  E=-15.41806  (126.4s)
+    [B4-k38] stage 9 converged step 50  E=-15.41915
+  [B4-k38] stage 9/9 clean  steps=50  E=-15.41915  (4.4s)
+  → B4-k38 final E = -15.41915  |  38.1min
+
+  [B4] k=58 important, noise on 38 non-important gates
+    [B4-k58] stage 1 converged step 200  E=-11.40248
+  [B4-k58] stage 1/9 p=0.400  steps=200  E=-11.40248  (473.6s)
+    [B4-k58] stage 2 converged step 50  E=-11.40413
+  [B4-k58] stage 2/9 p=0.300  steps=50  E=-11.40413  (118.0s)
+    [B4-k58] stage 3 converged step 50  E=-11.40418
+  [B4-k58] stage 3/9 p=0.200  steps=50  E=-11.40418  (119.4s)
+    [B4-k58] stage 4 converged step 50  E=-11.40414
+  [B4-k58] stage 4/9 p=0.100  steps=50  E=-11.40414  (117.9s)
+    [B4-k58] stage 5 converged step 50  E=-11.40417
+  [B4-k58] stage 5/9 p=0.050  steps=50  E=-11.40417  (117.4s)
+    [B4-k58] stage 6 converged step 50  E=-11.40414
+  [B4-k58] stage 6/9 p=0.025  steps=50  E=-11.40414  (118.5s)
+    [B4-k58] stage 7 converged step 50  E=-11.40418
+  [B4-k58] stage 7/9 p=0.010  steps=50  E=-11.40418  (119.2s)
+    [B4-k58] stage 8 converged step 50  E=-11.40414
+  [B4-k58] stage 8/9 p=0.005  steps=50  E=-11.40414  (117.0s)
+    [B4-k58] stage 9 converged step 50  E=-11.40417
+  [B4-k58] stage 9/9 clean  steps=50  E=-11.40417  (4.5s)
+  → B4-k58 final E = -11.40417  |  21.8min
+
+  [B4] k=77 important, noise on 19 non-important gates
+    [B4-k77] stage 1 converged step 210  E=-7.66999
+  [B4-k77] stage 1/9 p=0.400  steps=210  E=-7.66999  (458.0s)
+    [B4-k77] stage 2 converged step 150  E=-9.47726
+  [B4-k77] stage 2/9 p=0.300  steps=150  E=-9.47726  (330.2s)
+    [B4-k77] stage 3 converged step 170  E=-11.91018
+  [B4-k77] stage 3/9 p=0.200  steps=170  E=-11.91018  (373.4s)
+    [B4-k77] stage 4 converged step 50  E=-11.94686
+  [B4-k77] stage 4/9 p=0.100  steps=50  E=-11.94686  (110.8s)
+    [B4-k77] stage 5 converged step 50  E=-11.96892
+  [B4-k77] stage 5/9 p=0.050  steps=50  E=-11.96892  (110.6s)
+    [B4-k77] stage 6 converged step 50  E=-11.97832
+  [B4-k77] stage 6/9 p=0.025  steps=50  E=-11.97832  (112.2s)
+    [B4-k77] stage 7 converged step 50  E=-11.98196
+  [B4-k77] stage 7/9 p=0.010  steps=50  E=-11.98196  (110.8s)
+    [B4-k77] stage 8 converged step 50  E=-11.98278
+  [B4-k77] stage 8/9 p=0.005  steps=50  E=-11.98278  (111.9s)
+    [B4-k77] stage 9 converged step 50  E=-11.98335
+  [B4-k77] stage 9/9 clean  steps=50  E=-11.98335  (4.5s)
+  → B4-k77 final E = -11.98335  |  28.7min
+
+  [B4] k=96 important, noise on 0 non-important gates
+    [B4-k96] stage 1 converged step 180  E=-10.68590
+  [B4-k96] stage 1/9 p=0.400  steps=180  E=-10.68590  (351.4s)
+    [B4-k96] stage 2 converged step 50  E=-10.70961
+  [B4-k96] stage 2/9 p=0.300  steps=50  E=-10.70961  (96.3s)
+    [B4-k96] stage 3 converged step 50  E=-10.74084
+  [B4-k96] stage 3/9 p=0.200  steps=50  E=-10.74084  (96.9s)
+    [B4-k96] stage 4 converged step 50  E=-10.75023
+  [B4-k96] stage 4/9 p=0.100  steps=50  E=-10.75023  (100.6s)
+    [B4-k96] stage 5 converged step 50  E=-10.75031
+  [B4-k96] stage 5/9 p=0.050  steps=50  E=-10.75031  (99.4s)
+    [B4-k96] stage 6 converged step 50  E=-10.75031
+  [B4-k96] stage 6/9 p=0.025  steps=50  E=-10.75031  (99.5s)
+    [B4-k96] stage 7 converged step 50  E=-10.75036
+  [B4-k96] stage 7/9 p=0.010  steps=50  E=-10.75036  (99.2s)
+    [B4-k96] stage 8 converged step 50  E=-10.75073
+  [B4-k96] stage 8/9 p=0.005  steps=50  E=-10.75073  (98.7s)
+    [B4-k96] stage 9 converged step 50  E=-10.75389
+  [B4-k96] stage 9/9 clean  steps=50  E=-10.75389  (4.6s)
+  → B4-k96 final E = -10.75389  |  17.4min
+
+=================================================================
+                             key    final E   norm gap     time
+-----------------------------------------------------------------
+                 pruned_19_clean   -3.82682     0.7621 ✗    47.6s
+                 pruned_38_clean   -5.15653     0.6795 ✗    65.4s
+                 pruned_58_clean   -9.49077     0.4100 ✗    83.4s
+                 pruned_77_clean   -9.79984     0.3908 ✗    95.7s
+                 pruned_96_clean  -10.88259     0.3235 ✗   117.3s
+                      noise_full  -15.41912     0.0415 ✓  2284.1s
+                 pruned_19_noise        nan        nan ✗  11408.0s
+                 pruned_38_noise   -6.42994     0.6003 ✗  1194.5s
+                 pruned_58_noise   -6.50251     0.5958 ✗  1163.1s
+                 pruned_77_noise   -4.59281     0.7145 ✗  1348.6s
+                 pruned_96_noise  -15.41912     0.0415 ✓  2276.3s
+              selective_19_noise  -10.73251     0.3329 ✗  2281.2s
+              selective_38_noise  -12.12519     0.2463 ✗  2053.3s
+              selective_58_noise   -9.93003     0.3827 ✗  1819.1s
+              selective_77_noise  -15.41911     0.0415 ✓  2278.1s
+              selective_96_noise  -15.41912     0.0415 ✓  2259.9s
+                inv_sel_19_noise  -15.41912     0.0415 ✓  3548.1s
+                inv_sel_38_noise  -15.41915     0.0415 ✓  2288.6s
+                inv_sel_58_noise  -11.40417     0.2911 ✗  1305.7s
+                inv_sel_77_noise  -11.98335     0.2551 ✗  1722.4s
+                inv_sel_96_noise  -10.75389     0.3315 ✗  1046.7s
+-----------------------------------------------------------------
+                   ground energy  -16.08721
+  total wall time: 678.1 min
+=================================================================
+
+Results → results/noise_placement_study4_8qubit_20260618_133447/H00001/seed0054

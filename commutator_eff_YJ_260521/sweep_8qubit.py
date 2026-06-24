@@ -350,13 +350,7 @@ def make_selective_cost(H_pl, noise_mask, p):
 
 
 # ---------------------------------------------------------------------------
-# Adam optimizer
-# ---------------------------------------------------------------------------
-
-def adam_step(params, m, v, t, grad, lr, b1=0.9, b2=0.999, eps=1e-8):
-    m = b1 * m + (1 - b1) * grad
-    v = b2 * v + (1 - b2) * grad ** 2
-    return params - lr * (m / (1 - b1**t)) / (np.sqrt(v / (1 - b2**t)) + eps), m, v
+# Adam optimizer — use qml.AdamOptimizer (matches jungyun implementation)
 
 
 # ---------------------------------------------------------------------------
@@ -384,7 +378,6 @@ def run_anneal(cost_factory, clean_cost, init_params_flat, n_params,
     Returns: (energies_arr, steps_arr, total_steps, elapsed_s)
     """
     params = np.array(init_params_flat).flatten()[:n_params].copy()
-    m = np.zeros(n_params); v = np.zeros(n_params)
     all_e, all_steps, total = [], [], 0
     t_start = time.time()
     win = max(2, PAULI_WINDOW // PAULI_CHECK_EVERY)
@@ -392,14 +385,12 @@ def run_anneal(cost_factory, clean_cost, init_params_flat, n_params,
     for si, noise_p in enumerate(schedule, 1):
         use_clean = noise_p <= CLEAN_THRESHOLD
         cost_fn   = clean_cost if use_clean else cost_factory(noise_p)
-        gfn       = qml.grad(cost_fn)
-        m[:] = 0; v[:] = 0
+        opt       = qml.AdamOptimizer(stepsize=lr)
         stage_ckpt = []; step_i = 0; t0 = time.time()
         stage_lbl = "clean" if use_clean else f"p={noise_p:.3f}"
 
         while step_i < PAULI_MAX_STEPS:
-            g = np.array(gfn(pnp.array(params, requires_grad=True)))
-            params, m, v = adam_step(params, m, v, step_i + 1, g, lr)
+            params = np.array(opt.step(cost_fn, pnp.array(params, requires_grad=True)))
             step_i += 1
             if step_i % PAULI_CHECK_EVERY == 0:
                 e = float(clean_cost(pnp.array(params, requires_grad=True)))
@@ -451,8 +442,6 @@ def _run_anneal_shaped(clean_cost_fn, noisy_factory, init_params, schedule, lr, 
     clean_cost_fn(params) and noisy_factory(p)(params) take that shape.
     """
     params = np.array(init_params).copy()
-    flat_size = params.size
-    m = np.zeros(flat_size); v = np.zeros(flat_size)
     all_e, all_steps, total = [], [], 0
     t_start = time.time()
     win = max(2, PAULI_WINDOW // PAULI_CHECK_EVERY)
@@ -463,17 +452,12 @@ def _run_anneal_shaped(clean_cost_fn, noisy_factory, init_params, schedule, lr, 
             cost_fn = clean_cost_fn
         else:
             cost_fn = noisy_factory(noise_p)
-        gfn = qml.grad(cost_fn)
-        m[:] = 0; v[:] = 0
+        opt = qml.AdamOptimizer(stepsize=lr)
         stage_ckpt = []; step_i = 0; t0 = time.time()
         stage_lbl = "clean" if use_clean else f"p={noise_p:.3f}"
 
         while step_i < PAULI_MAX_STEPS:
-            pp = pnp.array(params, requires_grad=True)
-            g  = np.array(gfn(pp)).flatten()
-            params_flat = params.flatten()
-            params_flat, m, v = adam_step(params_flat, m, v, step_i + 1, g, lr)
-            params = params_flat.reshape(N_LAYERS, N_QUBITS, 3)
+            params = np.array(opt.step(cost_fn, pnp.array(params, requires_grad=True)))
             step_i += 1
             if step_i % PAULI_CHECK_EVERY == 0:
                 e = float(clean_cost_fn(pnp.array(params, requires_grad=True)))
@@ -501,8 +485,6 @@ def _run_anneal_flat(clean_cost_fn, noisy_factory, init_active_params, label="",
     if schedule is None:
         schedule = PAULI_SCHEDULE
     params = np.array(init_active_params).flatten().copy()
-    n = len(params)
-    m = np.zeros(n); v = np.zeros(n)
     all_e, all_steps, total = [], [], 0
     t_start = time.time()
     win = max(2, PAULI_WINDOW // PAULI_CHECK_EVERY)
@@ -510,15 +492,12 @@ def _run_anneal_flat(clean_cost_fn, noisy_factory, init_active_params, label="",
     for si, noise_p in enumerate(schedule, 1):
         use_clean = noise_p <= CLEAN_THRESHOLD
         cost_fn   = clean_cost_fn if use_clean else noisy_factory(noise_p)
-        gfn       = qml.grad(cost_fn)
-        m[:] = 0; v[:] = 0
+        opt       = qml.AdamOptimizer(stepsize=lr)
         stage_ckpt = []; step_i = 0; t0 = time.time()
         stage_lbl = "clean" if use_clean else f"p={noise_p:.3f}"
 
         while step_i < PAULI_MAX_STEPS:
-            pp = pnp.array(params, requires_grad=True)
-            g  = np.array(gfn(pp))
-            params, m, v = adam_step(params, m, v, step_i + 1, g, lr)
+            params = np.array(opt.step(cost_fn, pnp.array(params, requires_grad=True)))
             step_i += 1
             if step_i % PAULI_CHECK_EVERY == 0:
                 e = float(clean_cost_fn(pnp.array(params, requires_grad=True)))
@@ -660,16 +639,14 @@ def main():
             mask_k       = _mask_for_k(k)
             active_init  = init_params.flatten()[mask_k.flatten()]
             clean_k      = make_pruned_cost(H_pl, mask_k, 0.0)
-            gfn          = qml.grad(clean_k)
             params_a     = np.array(active_init).flatten().copy()
             n_a          = len(params_a)
-            m_a = np.zeros(n_a); v_a = np.zeros(n_a)
+            opt_a        = qml.AdamOptimizer(stepsize=LR)
             hist = [float(clean_k(pnp.array(params_a, requires_grad=True)))]
             t0 = time.time()
             print(f"\n  [A] k={k} ({100*k//N_GATES}%)  active_params={n_a}")
             for step in range(CLEAN_N_STEPS):
-                g = np.array(gfn(pnp.array(params_a, requires_grad=True)))
-                params_a, m_a, v_a = adam_step(params_a, m_a, v_a, step + 1, g, LR)
+                params_a = np.array(opt_a.step(clean_k, pnp.array(params_a, requires_grad=True)))
                 hist.append(float(clean_k(pnp.array(params_a, requires_grad=True))))
                 if (step + 1) % 200 == 0:
                     print(f"    step {step+1:>4} | E={hist[-1]:.5f}")
@@ -758,11 +735,11 @@ def main():
         w = csv.writer(f)
         w.writerow(["key", "final_e", "normalized_gap", "steps", "time_s",
                     "k", "frac", "h_id", "seed"])
-        span = abs(GROUND) * 2  # rough span
+        span = abs(GROUND) * 2  # spectrum_span ≈ top - ground (symmetric TFIM)
         for key, rec in cfg_runs.items():
             k_val = rec.get("k", N_GATES)
             frac  = k_val / N_GATES
-            norm_gap = (rec["final_e"] - GROUND) / abs(GROUND)
+            norm_gap = (rec["final_e"] - GROUND) / span
             w.writerow([key, f"{rec['final_e']:.5f}", f"{norm_gap:.4f}",
                         rec["steps"], rec["time_s"],
                         k_val, f"{frac:.2f}", H_ID, SEED])
@@ -787,7 +764,7 @@ def main():
     print(f"  {'key':>30}  {'final E':>9}  {'norm gap':>9}  {'time':>7}")
     print("-" * 65)
     for key, rec in cfg_runs.items():
-        norm_gap = (rec["final_e"] - GROUND) / abs(GROUND)
+        norm_gap = (rec["final_e"] - GROUND) / (abs(GROUND) * 2)
         ok = "✓" if norm_gap < 0.05 else ("△" if norm_gap < 0.2 else "✗")
         print(f"  {key:>30}  {rec['final_e']:>9.5f}  {norm_gap:>9.4f} {ok}  {rec['time_s']:>6.1f}s")
     print("-" * 65)

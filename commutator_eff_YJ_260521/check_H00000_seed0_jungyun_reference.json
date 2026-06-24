@@ -1,0 +1,113 @@
+{
+  "purpose": "Reference values from targeted_tfim_8qubit (jungyun) for H00000 seed=0. Use to verify YJ sweep_8qubit.py produces matching clean and full (top100) results.",
+  "hamiltonian": {
+    "h_id": "H00000",
+    "jzz": -1.022768208338797,
+    "hx": 1.0429285161955684,
+    "hz": 0.0,
+    "ground_energy": -10.183437124401689,
+    "top_energy": 10.183437124401669,
+    "spectrum_span": 20.366874248803356
+  },
+  "seed": 0,
+  "init_params_convention": "np.random.default_rng(0).uniform(0.0, 2*pi, (4, 8, 3))",
+  "jungyun_schedule": [
+    0.8,
+    0.6,
+    0.4,
+    0.2,
+    0.1,
+    0.05,
+    0.02,
+    0.01,
+    0.0
+  ],
+  "jungyun_noise_convention": "user_p -> PauliError(p/2) internally",
+  "yj_equivalent_schedule": [
+    0.4,
+    0.3,
+    0.2,
+    0.1,
+    0.05,
+    0.025,
+    0.01,
+    0.005,
+    0.0
+  ],
+  "yj_noise_convention": "p passed directly to PauliError",
+  "reference_values": {
+    "clean": {
+      "clean_final_energy": -8.290776601466016,
+      "normalized_gap": 0.09292837476260625,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "False",
+      "total_steps": 1000
+    },
+    "pauli_top10_fixed": {
+      "clean_final_energy": -8.595255468111414,
+      "normalized_gap": 0.07797866461435961,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "False",
+      "total_steps": 1000
+    },
+    "pauli_bottom10_fixed": {
+      "clean_final_energy": -8.057195486842208,
+      "normalized_gap": 0.10439705236970308,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "True",
+      "total_steps": 1000
+    },
+    "pauli_random10_fixed": {
+      "clean_final_energy": -7.517584939541228,
+      "normalized_gap": 0.13089157188747758,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "True",
+      "total_steps": 1000
+    },
+    "pauli_top50_fixed": {
+      "clean_final_energy": -8.877572706755512,
+      "normalized_gap": 0.06411707568346685,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "False",
+      "total_steps": 1000
+    },
+    "pauli_bottom50_fixed": {
+      "clean_final_energy": -7.4340376340621965,
+      "normalized_gap": 0.1349936891028348,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "True",
+      "total_steps": 1000
+    },
+    "pauli_random50_fixed": {
+      "clean_final_energy": -7.866080437633883,
+      "normalized_gap": 0.1137806743665617,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "True",
+      "total_steps": 1000
+    },
+    "pauli_top100_fixed": {
+      "clean_final_energy": -8.864692238529534,
+      "normalized_gap": 0.0647494981194592,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "False",
+      "total_steps": 1000
+    },
+    "shot_100": {
+      "clean_final_energy": -8.864794063520957,
+      "normalized_gap": 0.06474449858000215,
+      "spectrum_span": 20.366874248803356,
+      "bad_final": "False",
+      "total_steps": 1000
+    }
+  },
+  "key_checks": {
+    "clean": {
+      "clean_final_energy": -8.290776601466016,
+      "normalized_gap": 0.09292837476260625
+    },
+    "full_equiv (pauli_top100_fixed)": {
+      "clean_final_energy": -8.864692238529534,
+      "normalized_gap": 0.0647494981194592
+    }
+  }
+}

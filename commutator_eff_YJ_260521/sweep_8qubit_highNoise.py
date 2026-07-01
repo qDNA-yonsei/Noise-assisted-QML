@@ -59,7 +59,7 @@ CLEAN_TOTAL_STEPS = 1000  # fixed steps for clean (matches jungyun clean_budget)
 
 # Convergence constants
 # PauliError range: 0~1 (직접 전달, JY 코드의 0~0.5 변환 없이)
-PAULI_SCHEDULE   = [0.4, 0.3, 0.2, 0.1, 0.05, 0.025, 0.01, 0.005, 0.0]  # YJ: half of jungyun (same physical noise)
+PAULI_SCHEDULE   = [0.8, 0.6, 0.4, 0.2, 0.1, 0.05, 0.02, 0.01, 0.0]    # YJ: same as jungyun (2x physical noise vs base experiment)
 PAULI_MIN_STEPS  = 30    # matches jungyun PAULI_MIN_STEPS
 PAULI_MAX_STEPS  = 500   # matches jungyun PAULI_MAX_STEPS (per stage)
 PAULI_CHECK_EVERY = 10

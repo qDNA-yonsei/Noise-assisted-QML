@@ -1,0 +1,9 @@
+method_order,method_key,method_label,method_group,schedule_mode,target_selection_mode,target_fraction
+1,clean,clean,clean,,,
+2,full,full,full_noise,staged_prob_schedule,,1.0
+3,top10_fixed,top10_fixed,targeted_pauli,staged_prob_schedule,top,0.1
+4,top50_fixed,top50_fixed,targeted_pauli,staged_prob_schedule,top,0.5
+5,top90_fixed,top90_fixed,targeted_pauli,staged_prob_schedule,top,0.9
+6,bottom10_fixed,bottom10_fixed,targeted_pauli,staged_prob_schedule,bottom,0.1
+7,bottom50_fixed,bottom50_fixed,targeted_pauli,staged_prob_schedule,bottom,0.5
+8,bottom90_fixed,bottom90_fixed,targeted_pauli,staged_prob_schedule,bottom,0.9

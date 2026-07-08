@@ -15,6 +15,7 @@
       "method_label": "clean",
       "method_group": "clean",
       "schedule_mode": "",
+      "shots": "",
       "target_selection_mode": "",
       "target_fraction": "",
       "bad_final_total": 254,
@@ -30,6 +31,7 @@
       "method_label": "full",
       "method_group": "full_noise",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "",
       "target_fraction": 1.0,
       "bad_final_total": 124,
@@ -45,6 +47,7 @@
       "method_label": "top10_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "top",
       "target_fraction": 0.1,
       "bad_final_total": 381,
@@ -60,6 +63,7 @@
       "method_label": "top50_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "top",
       "target_fraction": 0.5,
       "bad_final_total": 303,
@@ -75,6 +79,7 @@
       "method_label": "top90_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "top",
       "target_fraction": 0.9,
       "bad_final_total": 118,
@@ -90,6 +95,7 @@
       "method_label": "bottom10_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "bottom",
       "target_fraction": 0.1,
       "bad_final_total": 283,
@@ -105,6 +111,7 @@
       "method_label": "bottom50_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "bottom",
       "target_fraction": 0.5,
       "bad_final_total": 221,
@@ -120,6 +127,7 @@
       "method_label": "bottom90_fixed",
       "method_group": "targeted_pauli",
       "schedule_mode": "staged_prob_schedule",
+      "shots": "",
       "target_selection_mode": "bottom",
       "target_fraction": 0.9,
       "bad_final_total": 101,
@@ -128,6 +136,22 @@
       "mean_normalized_gap": 0.049716,
       "median_normalized_gap": 0.0302,
       "mean_total_steps": 698.54
+    },
+    {
+      "method_order": 9,
+      "method_key": "shot_100",
+      "method_label": "shot_100",
+      "method_group": "shot",
+      "schedule_mode": "",
+      "shots": 100,
+      "target_selection_mode": "",
+      "target_fraction": "",
+      "bad_final_total": 357,
+      "bad_final_rate": 0.714,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.12565500261385693,
+      "median_normalized_gap": 0.1324123475486989,
+      "mean_total_steps": 1000
     }
   ],
   "overall_threshold_sweep": [
@@ -367,6 +391,36 @@
     },
     {
       "method_key": "bottom90_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.01,
+      "overall_bad_count": 495,
+      "overall_bad_rate": 0.99
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.05,
+      "overall_bad_count": 470,
+      "overall_bad_rate": 0.94
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.1,
+      "overall_bad_count": 357,
+      "overall_bad_rate": 0.714
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.2,
+      "overall_bad_count": 34,
+      "overall_bad_rate": 0.068
+    },
+    {
+      "method_key": "shot_100",
       "threshold": 0.3,
       "overall_bad_count": 0,
       "overall_bad_rate": 0.0

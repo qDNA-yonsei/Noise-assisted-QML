@@ -1,0 +1,10 @@
+method_order,method_key,method_label,method_group,schedule_mode,shots,target_selection_mode,target_fraction,bad_final_total,bad_final_rate,n_diverged,mean_normalized_gap,median_normalized_gap,mean_total_steps
+1,clean,clean,clean,,,,,254,0.508,0,0.1001384,0.10064999999999999,1000
+2,full,full,full_noise,staged_prob_schedule,,,1.0,60,0.12,0,0.038103000000000005,0.0208,891.76
+3,top10_fixed,top10_fixed,targeted_pauli,staged_prob_schedule,,top,0.1,358,0.716,0,0.13041460000000002,0.1335,922.76
+4,top50_fixed,top50_fixed,targeted_pauli,staged_prob_schedule,,top,0.5,299,0.598,0,0.11379159999999999,0.1122,1044.92
+5,top90_fixed,top90_fixed,targeted_pauli,staged_prob_schedule,,top,0.9,66,0.132,0,0.039258600000000005,0.0208,929.38
+6,bottom10_fixed,bottom10_fixed,targeted_pauli,staged_prob_schedule,,bottom,0.1,268,0.536,0,0.103286,0.105,685.1
+7,bottom50_fixed,bottom50_fixed,targeted_pauli,staged_prob_schedule,,bottom,0.5,222,0.444,0,0.088812,0.0776,954.44
+8,bottom90_fixed,bottom90_fixed,targeted_pauli,staged_prob_schedule,,bottom,0.9,110,0.22,0,0.05298780000000001,0.0302,1020.98
+9,shot_100,shot_100,shot,,100,,,357,0.714,0,0.12565500261385693,0.1324123475486989,1000

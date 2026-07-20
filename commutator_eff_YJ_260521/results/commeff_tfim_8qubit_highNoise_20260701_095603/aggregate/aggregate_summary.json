@@ -1,0 +1,429 @@
+{
+  "campaign_tag": "commeff_tfim_8qubit_highNoise",
+  "num_completed_samples": 5,
+  "completed_sample_ids": [
+    "H00000",
+    "H00001",
+    "H00002",
+    "H00003",
+    "H00004"
+  ],
+  "overall_summary": [
+    {
+      "method_order": 1,
+      "method_key": "clean",
+      "method_label": "clean",
+      "method_group": "clean",
+      "schedule_mode": "",
+      "shots": "",
+      "target_selection_mode": "",
+      "target_fraction": "",
+      "bad_final_total": 254,
+      "bad_final_rate": 0.508,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.1001384,
+      "median_normalized_gap": 0.10064999999999999,
+      "mean_total_steps": 1000
+    },
+    {
+      "method_order": 2,
+      "method_key": "full",
+      "method_label": "full",
+      "method_group": "full_noise",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "",
+      "target_fraction": 1.0,
+      "bad_final_total": 60,
+      "bad_final_rate": 0.12,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.038103000000000005,
+      "median_normalized_gap": 0.0208,
+      "mean_total_steps": 891.76
+    },
+    {
+      "method_order": 3,
+      "method_key": "top10_fixed",
+      "method_label": "top10_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "top",
+      "target_fraction": 0.1,
+      "bad_final_total": 358,
+      "bad_final_rate": 0.716,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.13041460000000002,
+      "median_normalized_gap": 0.1335,
+      "mean_total_steps": 922.76
+    },
+    {
+      "method_order": 4,
+      "method_key": "top50_fixed",
+      "method_label": "top50_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "top",
+      "target_fraction": 0.5,
+      "bad_final_total": 299,
+      "bad_final_rate": 0.598,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.11379159999999999,
+      "median_normalized_gap": 0.1122,
+      "mean_total_steps": 1044.92
+    },
+    {
+      "method_order": 5,
+      "method_key": "top90_fixed",
+      "method_label": "top90_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "top",
+      "target_fraction": 0.9,
+      "bad_final_total": 66,
+      "bad_final_rate": 0.132,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.039258600000000005,
+      "median_normalized_gap": 0.0208,
+      "mean_total_steps": 929.38
+    },
+    {
+      "method_order": 6,
+      "method_key": "bottom10_fixed",
+      "method_label": "bottom10_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "bottom",
+      "target_fraction": 0.1,
+      "bad_final_total": 268,
+      "bad_final_rate": 0.536,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.103286,
+      "median_normalized_gap": 0.105,
+      "mean_total_steps": 685.1
+    },
+    {
+      "method_order": 7,
+      "method_key": "bottom50_fixed",
+      "method_label": "bottom50_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "bottom",
+      "target_fraction": 0.5,
+      "bad_final_total": 222,
+      "bad_final_rate": 0.444,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.088812,
+      "median_normalized_gap": 0.0776,
+      "mean_total_steps": 954.44
+    },
+    {
+      "method_order": 8,
+      "method_key": "bottom90_fixed",
+      "method_label": "bottom90_fixed",
+      "method_group": "targeted_pauli",
+      "schedule_mode": "staged_prob_schedule",
+      "shots": "",
+      "target_selection_mode": "bottom",
+      "target_fraction": 0.9,
+      "bad_final_total": 110,
+      "bad_final_rate": 0.22,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.05298780000000001,
+      "median_normalized_gap": 0.0302,
+      "mean_total_steps": 1020.98
+    },
+    {
+      "method_order": 9,
+      "method_key": "shot_100",
+      "method_label": "shot_100",
+      "method_group": "shot",
+      "schedule_mode": "",
+      "shots": 100,
+      "target_selection_mode": "",
+      "target_fraction": "",
+      "bad_final_total": 357,
+      "bad_final_rate": 0.714,
+      "n_diverged": 0,
+      "mean_normalized_gap": 0.12565500261385693,
+      "median_normalized_gap": 0.1324123475486989,
+      "mean_total_steps": 1000
+    }
+  ],
+  "overall_threshold_sweep": [
+    {
+      "method_key": "clean",
+      "threshold": 0.01,
+      "overall_bad_count": 487,
+      "overall_bad_rate": 0.974
+    },
+    {
+      "method_key": "clean",
+      "threshold": 0.05,
+      "overall_bad_count": 445,
+      "overall_bad_rate": 0.89
+    },
+    {
+      "method_key": "clean",
+      "threshold": 0.1,
+      "overall_bad_count": 254,
+      "overall_bad_rate": 0.508
+    },
+    {
+      "method_key": "clean",
+      "threshold": 0.2,
+      "overall_bad_count": 11,
+      "overall_bad_rate": 0.022
+    },
+    {
+      "method_key": "clean",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "full",
+      "threshold": 0.01,
+      "overall_bad_count": 411,
+      "overall_bad_rate": 0.822
+    },
+    {
+      "method_key": "full",
+      "threshold": 0.05,
+      "overall_bad_count": 160,
+      "overall_bad_rate": 0.32
+    },
+    {
+      "method_key": "full",
+      "threshold": 0.1,
+      "overall_bad_count": 60,
+      "overall_bad_rate": 0.12
+    },
+    {
+      "method_key": "full",
+      "threshold": 0.2,
+      "overall_bad_count": 1,
+      "overall_bad_rate": 0.002
+    },
+    {
+      "method_key": "full",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "top10_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 486,
+      "overall_bad_rate": 0.972
+    },
+    {
+      "method_key": "top10_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 458,
+      "overall_bad_rate": 0.916
+    },
+    {
+      "method_key": "top10_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 358,
+      "overall_bad_rate": 0.716
+    },
+    {
+      "method_key": "top10_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 63,
+      "overall_bad_rate": 0.126
+    },
+    {
+      "method_key": "top10_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "top50_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 482,
+      "overall_bad_rate": 0.964
+    },
+    {
+      "method_key": "top50_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 457,
+      "overall_bad_rate": 0.914
+    },
+    {
+      "method_key": "top50_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 299,
+      "overall_bad_rate": 0.598
+    },
+    {
+      "method_key": "top50_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 24,
+      "overall_bad_rate": 0.048
+    },
+    {
+      "method_key": "top50_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "top90_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 414,
+      "overall_bad_rate": 0.828
+    },
+    {
+      "method_key": "top90_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 169,
+      "overall_bad_rate": 0.338
+    },
+    {
+      "method_key": "top90_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 66,
+      "overall_bad_rate": 0.132
+    },
+    {
+      "method_key": "top90_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "top90_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "bottom10_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 489,
+      "overall_bad_rate": 0.978
+    },
+    {
+      "method_key": "bottom10_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 444,
+      "overall_bad_rate": 0.888
+    },
+    {
+      "method_key": "bottom10_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 268,
+      "overall_bad_rate": 0.536
+    },
+    {
+      "method_key": "bottom10_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 16,
+      "overall_bad_rate": 0.032
+    },
+    {
+      "method_key": "bottom10_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "bottom50_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 458,
+      "overall_bad_rate": 0.916
+    },
+    {
+      "method_key": "bottom50_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 335,
+      "overall_bad_rate": 0.67
+    },
+    {
+      "method_key": "bottom50_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 222,
+      "overall_bad_rate": 0.444
+    },
+    {
+      "method_key": "bottom50_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 31,
+      "overall_bad_rate": 0.062
+    },
+    {
+      "method_key": "bottom50_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "bottom90_fixed",
+      "threshold": 0.01,
+      "overall_bad_count": 439,
+      "overall_bad_rate": 0.878
+    },
+    {
+      "method_key": "bottom90_fixed",
+      "threshold": 0.05,
+      "overall_bad_count": 213,
+      "overall_bad_rate": 0.426
+    },
+    {
+      "method_key": "bottom90_fixed",
+      "threshold": 0.1,
+      "overall_bad_count": 110,
+      "overall_bad_rate": 0.22
+    },
+    {
+      "method_key": "bottom90_fixed",
+      "threshold": 0.2,
+      "overall_bad_count": 7,
+      "overall_bad_rate": 0.014
+    },
+    {
+      "method_key": "bottom90_fixed",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.01,
+      "overall_bad_count": 495,
+      "overall_bad_rate": 0.99
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.05,
+      "overall_bad_count": 470,
+      "overall_bad_rate": 0.94
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.1,
+      "overall_bad_count": 357,
+      "overall_bad_rate": 0.714
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.2,
+      "overall_bad_count": 34,
+      "overall_bad_rate": 0.068
+    },
+    {
+      "method_key": "shot_100",
+      "threshold": 0.3,
+      "overall_bad_count": 0,
+      "overall_bad_rate": 0.0
+    }
+  ]
+}
